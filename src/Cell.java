@@ -13,12 +13,7 @@ abstract class Cell extends Game{
         this.centerY = centerY;
         this.halfLength = halfLength;
         this.color = color;
-        if (c=='C') {
-            constructible=true;
-        }
-        else{
-            constructible=false;
-        }
+        constructible = c=='C';
     }
 
     public void setColor(Color color) {
