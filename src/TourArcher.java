@@ -5,13 +5,12 @@ public class TourArcher extends Tours {
     private String type;
     private String nom;
 
-    public TourArcher(int pv, int atk, double atkSpeed, double range, int cout, String type,
-            String nom) {
-        super(pv, atk, atkSpeed, range, Element.Neutre, cout);
+    public TourArcher(String type, String nom) {
+        super(30, 5, 1, 2, Element.Neutre, 20);
         this.type = type;
         this.nom = nom;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -19,6 +18,7 @@ public class TourArcher extends Tours {
         return nom;
     }
     
+    @Override
     public void draw(double x, double y, int rayon) {
         StdDraw.setPenColor(StdDraw.YELLOW);
         StdDraw.filledCircle(x,y,rayon);

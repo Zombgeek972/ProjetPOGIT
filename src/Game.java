@@ -39,22 +39,15 @@ public class Game{
     }
 
     private void update ( double deltaTimeSec ){
+        Tours t = new TourArcher("none", "kakou kakou");
+
         double cooSourisX = StdDraw.mouseX();
         double cooSourisY = StdDraw.mouseY();
-        Cell cellule = null;
-        Cell ancienneCell = null;
         if (StdDraw.isMousePressed()) {
-            cooSourisX = StdDraw.mouseX();
-            cooSourisY = StdDraw.mouseY();
-            cellule = cellClicked(cooSourisX, cooSourisY);
-            if (cellule != null && cellule.getChar() == 'C') {
-                cellule.setColor(StdDraw.BLUE);
-                cellule.draw();
+            Cell cellule = cellClicked(cooSourisX, cooSourisY);
+            if (cellule.getChar() == 'C') {
+                t.draw(cellule.getCenterX(), cellule.getCenterY(), cellule.getHalfLength());
                 StdDraw.show();
-            }
-            ancienneCell = cellule;
-            if (ancienneCell != null){
-                ancienneCell.setColor(StdDraw.LIGHT_GRAY);
             }
         }
     }
