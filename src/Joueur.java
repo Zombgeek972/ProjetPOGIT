@@ -39,7 +39,6 @@ public class Joueur {
     }
 
     public void draw() {
-        System.out.println("salut mewen");
         //bordure de la zone joueur
         int centerX = 856;
         int centerY = 641;
