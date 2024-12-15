@@ -8,6 +8,6 @@ public class CellBase extends Cell{
     }
 
     public String toString() {
-        return super.toString()+"base.";
+        return super.toString();
     }
 }

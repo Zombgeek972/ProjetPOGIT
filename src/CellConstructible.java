@@ -8,6 +8,6 @@ public class CellConstructible extends Cell{
     }
 
     public String toString() {
-        return super.toString()+"constructible.";
+        return super.toString();
     }
 }

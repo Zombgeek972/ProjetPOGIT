@@ -8,6 +8,6 @@ public class CellSpawn extends Cell{
     }
 
     public String toString() {
-        return super.toString()+"spawn.";
+        return super.toString();
     }
 }

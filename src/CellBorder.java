@@ -10,6 +10,6 @@ public class CellBorder extends Cell{
     }
 
     public String toString() {
-        return super.toString()+"bordure.";
+        return super.toString();
     }
 }

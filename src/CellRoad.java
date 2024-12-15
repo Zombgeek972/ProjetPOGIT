@@ -10,6 +10,6 @@ public class CellRoad extends Cell{
     }
 
     public String toString() {
-        return super.toString()+"chemin.";
+        return super.toString();
     }
 }

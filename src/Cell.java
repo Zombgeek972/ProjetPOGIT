@@ -82,6 +82,6 @@ abstract class Cell extends Game{
     }
 
     public String toString() {
-        return Character.toString(c)+", tu as cliqué sur la case : ";
+        return Character.toString(c);
     }
 }
