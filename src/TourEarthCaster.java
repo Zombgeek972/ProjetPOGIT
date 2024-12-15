@@ -7,8 +7,8 @@ public class TourEarthCaster extends Tours {
     private String type;
     private String nom;
 
-    public TourEarthCaster(int pv, int atk, double atkSpeed, double range, int cout, String type, String nom) {
-        super(pv, atk, atkSpeed, range, Element.Terre, cout);
+    public TourEarthCaster(String type, String nom) {
+        super(50, 7, 0.5, 2.5, Element.Terre, 100);
         this.type = type;
         this.nom = nom;
     }
@@ -20,6 +20,7 @@ public class TourEarthCaster extends Tours {
         return nom;
     }
     
+    @Override
     public void draw(double x, double y, int rayon) {
         StdDraw.setPenColor(new Color(139, 69, 19)); //marron
         StdDraw.filledCircle(x,y,rayon);

@@ -5,8 +5,8 @@ public class TourFireCaster extends Tours {
     private String type;
     private String nom;
 
-    public TourFireCaster(int pv, int atk, double atkSpeed, double range, int cout, String type, String nom) {
-        super(pv, atk, atkSpeed, range, Element.Feu, cout);
+    public TourFireCaster(String type, String nom) {
+        super(30, 10, 0.5, 2.5, Element.Feu, 100);
         this.type = type;
         this.nom = nom;
     }
@@ -18,6 +18,7 @@ public class TourFireCaster extends Tours {
         return nom;
     }
 
+    @Override
     public void draw(double x, double y, int rayon) {
         StdDraw.setPenColor(StdDraw.ORANGE);
         StdDraw.filledCircle(x,y,rayon);
