@@ -66,10 +66,10 @@ public class Game{
      * @return la cellule sur laquelle on a cliqué
      */
     public Cell cellClicked(double x, double y) {
-        for (int i=0; i < carte.getCarte().size(); i++) {
-            for (int j=0; j < carte.getCarte().get(i).size(); j++) {
-                if (carte.getCarte().get(i).get(j).isMouseOn(x, y)) {
-                    return carte.getCarte().get(i).get(j);
+        for (int i=0; i < carte.getCarte().length; i++) {
+            for (int j=0; j < carte.getCarte()[i].length; j++) {
+                if (carte.getCarte()[i][j].isMouseOn(x, y)) {
+                    return carte.getCarte()[i][j];
                 }
             }
         }
