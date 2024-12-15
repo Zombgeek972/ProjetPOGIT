@@ -3,10 +3,10 @@ public class Ennemis extends Combattant {
     private double speed;
     private double reward;
     private List<Position<Integer, Integer>> chemin;
-    private List<List<Cell>> quadrillage;
+    private Cell[][] quadrillage;
     
     public Ennemis(int pv, int atk, double atkSpeed, double range, Element element,
-            double speed, double reward, String nomfichier, List<Position<Integer, Integer>> chemin, List<List<Cell>> quadrillage) {
+            double speed, double reward, String nomfichier, List<Position<Integer, Integer>> chemin, Cell[][] quadrillage) {
         super(pv, atk, atkSpeed, range, element);
         this.speed = speed;
         this.reward = reward;
@@ -22,8 +22,8 @@ public class Ennemis extends Combattant {
     }
 
     public void draw() {
-        Integer posXSpawn = quadrillage.get(chemin.get(0).getY()).get(chemin.get(0).getX()).getCenterX();
-        Integer posYSpawn = quadrillage.get(chemin.get(0).getY()).get(chemin.get(0).getX()).getCenterY();
+        Integer posXSpawn = quadrillage[chemin.get(0).getY()][chemin.get(0).getX()].getCenterX();
+        Integer posYSpawn = quadrillage[chemin.get(0).getY()][chemin.get(0).getX()].getCenterY();
         StdDraw.setPenColor(StdDraw.BLACK);
         StdDraw.filledCircle(posXSpawn, posYSpawn, 15);
         StdDraw.setPenColor(StdDraw.GRAY);
