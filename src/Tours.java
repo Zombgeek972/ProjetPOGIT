@@ -1,9 +1,9 @@
 public class Tours extends Combattant {
     private int cout;
 
-    public Tours(int pv, int atk, double atkSpeed, double range, Element element, Position<Integer, Integer> position,
+    public Tours(int pv, int atk, double atkSpeed, double range, Element element,
             int cout) {
-        super(pv, atk, atkSpeed, range, element, position);
+        super(pv, atk, atkSpeed, range, element);
         this.cout = cout;
     }
 
@@ -20,6 +20,6 @@ public class Tours extends Combattant {
     }
 
     public String toString() {
-        return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+", position : ("+getPosition().toString()+"), cout : "+cout;
+        return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+"), cout : "+cout;
     }
 }
