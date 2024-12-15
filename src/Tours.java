@@ -20,6 +20,7 @@ public class Tours extends Combattant {
     }
 
     public String toString() {
+        System.out.println("1");
         return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+"), cout : "+cout;
     }
 }
