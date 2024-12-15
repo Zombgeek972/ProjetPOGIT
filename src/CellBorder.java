@@ -5,8 +5,8 @@ public class CellBorder extends Cell{
     private static int green = 102;
     private static int blue = 35;
 
-    public CellBorder(int centerX, int centerY, int halfLength){
-        super('X', centerX, centerY, halfLength, new Color(red, green, blue));
+    public CellBorder(int i, int j){
+        super('X', new Color(red, green, blue), i, j);
     }
 
     public String toString() {

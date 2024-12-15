@@ -1,5 +1,8 @@
 public class Game{
     Carte carte;
+    Joueur joueur;
+    Cell ancienneCell;
+    Cell cellule;
 
     public Game(){
     }
@@ -16,8 +19,8 @@ public class Game{
     }
 
     private boolean isGameRunning (){
-        //TODO
-        return true;
+        //TODO pas fini
+        return joueur.getHp() > 0;
     }
 
     private void init (){
@@ -28,27 +31,55 @@ public class Game{
         StdDraw.enableDoubleBuffering () ;
 
         //chargement de toutes les zones du canvas
-        carte = new Carte("5-8.mtp");
+        //chargement de la carte
+        carte = new Carte("testMap.mtp");
         carte.draw();
 
-        Joueur joueur = new Joueur();
+        //chargement du joueur
+        joueur = new Joueur();
         joueur.draw();
+
+        //chargement des ennemis
         Ennemis ennemi = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 8, 50, "5-8.mtp", carte.getChemin(), carte.getCarte());
         ennemi.draw();
+
+        //affichage
         StdDraw.show();
     }
 
+    Tours t = new TourArcher("none", "kakou kakou");
+
     private void update ( double deltaTimeSec ){
-        Tours t = new TourArcher("none", "kakou kakou");
 
         double cooSourisX = StdDraw.mouseX();
         double cooSourisY = StdDraw.mouseY();
-        if (StdDraw.isMousePressed()) {
-            Cell cellule = cellClicked(cooSourisX, cooSourisY);
-            if (cellule.getChar() == 'C') {
-                t.draw(cellule.getCenterX(), cellule.getCenterY(), cellule.getHalfLength());
-                StdDraw.show();
+        cellule = getCellCoo(cooSourisX, cooSourisY);
+
+        //si il y a une ancienne cellule d'enregistrée et que la cellule survolée par la souris est différente
+        if (ancienneCell != null && cellule != ancienneCell) {
+            ancienneCell.setColorBorderBlack();
+            ancienneCell.draw();
+        }
+
+        //si on survole la carte
+        if (cellule != null) {
+            cellule.setColorBorderWhite();
+
+            if (StdDraw.isMousePressed()) {
+                if (cellule.getChar() == 'C') {
+                    t.draw(cellule.getCenterX(), cellule.getCenterY(), cellule.getHalfLength() - 0.2*cellule.getHalfLength());
+                }
             }
+            ancienneCell = cellule;
+            cellule.draw();
+            StdDraw.show();
+        }
+        //si on sort de la carte on remet le bord de la derniere cellule en noir
+        else if (ancienneCell != null) {
+            ancienneCell.setColorBorderBlack();
+            ancienneCell.draw();
+            StdDraw.show();
+            ancienneCell = null;
         }
     }
 
@@ -56,9 +87,9 @@ public class Game{
      * 
      * @param x coordonnées x de la souris
      * @param y coordonnées y de la souris
-     * @return la cellule sur laquelle on a cliqué
+     * @return la cellule présente aux coordonnées x,y
      */
-    public Cell cellClicked(double x, double y) {
+    public Cell getCellCoo(double x, double y) {
         for (int i=0; i < carte.getCarte().length; i++) {
             for (int j=0; j < carte.getCarte()[i].length; j++) {
                 if (carte.getCarte()[i][j].isMouseOn(x, y)) {

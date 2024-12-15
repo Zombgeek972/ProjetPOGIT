@@ -5,8 +5,8 @@ public class CellRoad extends Cell{
     private static int green = 178;
     private static int blue = 128;
     
-    public CellRoad(int centerX, int centerY, int halfLength){
-        super('R', centerX, centerY, halfLength, new Color(red, green, blue));
+    public CellRoad(int i, int j){
+        super('R', new Color(red, green, blue), i, j);
     }
 
     public String toString() {

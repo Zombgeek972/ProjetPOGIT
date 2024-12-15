@@ -60,23 +60,23 @@ public class Carte extends Niveau{
             String line = queue.remove();
             for(int j=0; j<line.length(); j++) {
                 if (line.charAt(j) =='S') {
-                    Cell celluleSpawn = new CellSpawn(0,0,0);
+                    Cell celluleSpawn = new CellSpawn(i, j);
                     quadrillage[i][j] = celluleSpawn;
                 }
                 else if (line.charAt(j) == 'B'){
-                    Cell celluleBase = new CellBase(0,0,0);
+                    Cell celluleBase = new CellBase(i, j);
                     quadrillage[i][j] = celluleBase;
                 }
                 else if (line.charAt(j)=='R') {
-                    Cell celluleRoad = new CellRoad(0,0,0);
+                    Cell celluleRoad = new CellRoad(i, j);
                     quadrillage[i][j] = celluleRoad;
                 }
                 else if (line.charAt(j)=='C') {
-                    Cell celluleConstructible = new CellConstructible(0,0,0);
+                    Cell celluleConstructible = new CellConstructible(i, j);
                     quadrillage[i][j] = celluleConstructible;
                 }
                 else if (line.charAt(j)=='X') {
-                    Cell celluleBorder = new CellBorder(0,0,0);
+                    Cell celluleBorder = new CellBorder(i, j);
                     quadrillage[i][j] = celluleBorder;
                 }
             }
@@ -159,14 +159,15 @@ public class Carte extends Niveau{
         int centerX = halfLength;
         int centerY = halfLength;
 
-        //affichage
+        //enregistrement des coordonnées des cellules sur le canvas StdDraw et affichage
         for (int i=0; i<quadrillage.length; i++) {
             int hauteur = quadrillage.length-1;
             for (int j=0; j<quadrillage[i].length; j++) {
+                //enregistrement
                 quadrillage[hauteur-i][j].setCenterX(centerX);
                 quadrillage[hauteur-i][j].setCenterY(centerY);
                 quadrillage[hauteur-i][j].setHalfLength(halfLength);
-
+                //affichage
                 quadrillage[hauteur-i][j].draw();
                 centerX += ecart;
             }

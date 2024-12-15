@@ -23,5 +23,5 @@ abstract class Tours extends Combattant {
         return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+"), cout : "+cout;
     }
 
-    abstract void draw(double x, double y, int rayon);
+    abstract void draw(double x, double y, double rayon);
 }

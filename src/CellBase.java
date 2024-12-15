@@ -3,8 +3,8 @@ import java.awt.Color;
 public class CellBase extends Cell{
     private static Color color = StdDraw.ORANGE;
 
-    public CellBase(int centerX, int centerY, int halfLength){
-        super('B', centerX, centerY, halfLength, color);
+    public CellBase(int i, int j){
+        super('B', color, i, j);
     }
 
     public String toString() {

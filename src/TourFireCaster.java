@@ -19,7 +19,7 @@ public class TourFireCaster extends Tours {
     }
 
     @Override
-    public void draw(double x, double y, int rayon) {
+    public void draw(double x, double y, double rayon) {
         StdDraw.setPenColor(StdDraw.ORANGE);
         StdDraw.filledCircle(x,y,rayon);
     }

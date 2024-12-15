@@ -21,7 +21,7 @@ public class TourEarthCaster extends Tours {
     }
     
     @Override
-    public void draw(double x, double y, int rayon) {
+    public void draw(double x, double y, double rayon) {
         StdDraw.setPenColor(new Color(139, 69, 19)); //marron
         StdDraw.filledCircle(x,y,rayon);
     }

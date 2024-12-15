@@ -6,18 +6,40 @@ abstract class Cell extends Game{
     private int centerY;
     private int halfLength;
     private Color color;
+    private Color colorBorder;
+    //position i,j de la cellule dans le quadrillage de la classe carte
+    private int i;
+    private int j;
 
-    public Cell(char c, int centerX, int centerY, int halfLength, Color color) {
+    public Cell(char c, Color color, int i, int j) {
         this.c = c;
-        this.centerX = centerX;
-        this.centerY = centerY;
-        this.halfLength = halfLength;
         this.color = color;
-        constructible = c=='C';
+        this.constructible = c=='C';
+        this.colorBorder = StdDraw.BLACK;
+        this.i = i;
+        this.j = j;
     }
 
+    public Color getColor() {
+        return color;
+    }
     public void setColor(Color color) {
         this.color = color;
+    }
+    public Color getColorBorder() {
+        return colorBorder;
+    }
+    public void setColorBorderWhite() {
+        colorBorder = StdDraw.WHITE;
+    }
+    public void setColorBorderBlack() {
+        colorBorder = StdDraw.BLACK;
+    }
+    public boolean isBorderWhite() {
+        return colorBorder == StdDraw.WHITE;
+    }
+    public boolean isBorderBlack() {
+        return colorBorder == StdDraw.BLACK;
     }
 
     public char getChar() {
@@ -49,14 +71,17 @@ abstract class Cell extends Game{
         this.halfLength = halfLength;
     }
 
-    public Color getColor() {
-        return color;
+    public int getI() {
+        return i;
     }
-
+    public int getJ() {
+        return j;
+    }
+    
     public void draw() {
         StdDraw.setPenColor(this.color);
         StdDraw.filledSquare (centerX, centerY, halfLength);
-        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.setPenColor(colorBorder);
         StdDraw.square(centerX, centerY, halfLength);
     }
 
@@ -67,13 +92,7 @@ abstract class Cell extends Game{
      * @return vrai si la souris est sur la case lorsque l'on clique
      */
     public boolean isMouseOn(double x, double y) {
-        if (centerX-halfLength < x && x < centerX+halfLength) {
-            if (centerY-halfLength < y && y < centerY+halfLength) {
-                return true;
-            }
-            return false;
-        }
-        return false;
+        return centerX-halfLength < x && x < centerX+halfLength && centerY-halfLength < y && y < centerY+halfLength;
     }
 
     public String toString() {
