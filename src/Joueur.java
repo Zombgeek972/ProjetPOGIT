@@ -33,10 +33,7 @@ public class Joueur {
         hp += quantité;
     }
     public void enleveVie(int quantite) {
-        if (hp - quantite < 0) {
-            return;
-        }
-        else {
+        if (hp - quantite >= 0) {
             hp -= quantite;
         }
     }
