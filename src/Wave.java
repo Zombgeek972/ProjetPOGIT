@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class Wave {
-    private List<Ennemis> lstEnnemis;
+    private List<String> lstEnnemis;
     private List<Double> lstTimeToSpawn;
 
     public Wave(String nomFichier){
@@ -30,11 +30,14 @@ public class Wave {
         }
         lstEnnemis = new ArrayList<>();
         lstTimeToSpawn = new ArrayList<>();
-        int i = 0;
         while (queue.isEmpty()) {
             String line = queue.remove();
-            String[] linepart = queue.split("|") ;
-            i++;
+            Double time = Double.valueOf(line.substring(0, line.indexOf('|'))) ;
+            String name = line.substring(line.indexOf('|'), -1);
+            lstEnnemis.add(name);
+            lstTimeToSpawn.add(time);
         }
     }
+
+    
 }
