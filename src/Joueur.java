@@ -10,7 +10,6 @@ public class Joueur {
     public int getHp() {
         return hp;
     }
-
     public int getMoney() {
         return money;
     }
@@ -23,8 +22,23 @@ public class Joueur {
         return (hp > 0);
     }
 
-    public void ajouteMonnaie(){
-        //TODO
+    public void ajouteMonnaie(int montant) {
+        money += montant;
+    }
+    public void enleveMonnaie(int montant) {
+        money += montant;
+    }
+
+    public void ajouteVie(int quantité) {
+        hp += quantité;
+    }
+    public void enleveVie(int quantite) {
+        if (hp - quantite < 0) {
+            return;
+        }
+        else {
+            hp -= quantite;
+        }
     }
 
     public void draw() {
@@ -84,7 +98,7 @@ public class Joueur {
 
         //affichage du nombre de coeur
         StdDraw.setPenColor(new Color (223 , 75 , 95));
-        StdDraw.text(centerX+decalageCoeur-50, centerY, money+"");
+        StdDraw.text(centerX+decalageCoeur-50, centerY, hp+"");
     }
 }
 

@@ -62,30 +62,24 @@ public class Carte extends Niveau{
                 if (line.charAt(j) =='S') {
                     Cell celluleSpawn = new CellSpawn(0,0,0);
                     quadrillage[i][j] = celluleSpawn;
-                    System.out.print(celluleSpawn);
                 }
                 else if (line.charAt(j) == 'B'){
                     Cell celluleBase = new CellBase(0,0,0);
                     quadrillage[i][j] = celluleBase;
-                    System.out.print(celluleBase);
                 }
                 else if (line.charAt(j)=='R') {
                     Cell celluleRoad = new CellRoad(0,0,0);
                     quadrillage[i][j] = celluleRoad;
-                    System.out.print(celluleRoad);
                 }
                 else if (line.charAt(j)=='C') {
                     Cell celluleConstructible = new CellConstructible(0,0,0);
                     quadrillage[i][j] = celluleConstructible;
-                    System.out.print(celluleConstructible);
                 }
                 else if (line.charAt(j)=='X') {
                     Cell celluleBorder = new CellBorder(0,0,0);
                     quadrillage[i][j] = celluleBorder;
-                    System.out.print(celluleBorder);
                 }
             }
-            System.out.println();
             i++;
         }
         calculChemin();

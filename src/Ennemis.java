@@ -12,6 +12,7 @@ public class Ennemis extends Combattant {
         this.reward = reward;
         this.chemin = chemin;
         this.quadrillage = quadrillage;
+        System.out.println();
     }
 
     public double getSpeed() {
