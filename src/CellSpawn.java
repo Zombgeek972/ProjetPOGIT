@@ -1,5 +1,4 @@
 import java.awt.Color;
-import libraries.StdDraw;
 
 public class CellSpawn extends Cell{
     private static Color color = StdDraw.RED;

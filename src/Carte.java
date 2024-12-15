@@ -1,11 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
-import libraries.StdDraw;
+import java.util.Queue;
 
 /*
  * Dans StdDraw, les coordonnées x:0,y:0 du canvas sont en bas à gauche:
@@ -24,54 +25,21 @@ import libraries.StdDraw;
   * La classe Carte génere et affiche la carte du jeu à partir du fichier donné en paramètre
   */
 public class Carte extends Niveau{
-    private List<List<Cell>> quadrillage;
-    private List<List<Boolean>> quadrillageB;
-    private List<Position<Integer,Integer>> chemin;
+    private Cell[][] quadrillage;
+    private boolean[][] quadrillageB;
+    private List<Position<Integer, Integer>> chemin;
 
     public Carte(String nomFichier) {
-        quadrillage = new ArrayList<>();
-        quadrillageB = new ArrayList<>();
-
-        //création de la carte et de la carte booléenne
-        Path cheminDuFichier = Path.of("ressources\\maps\\"+nomFichier);
-
-        try (BufferedReader readerer = Files.newBufferedReader(cheminDuFichier)) {
+        //récupération du fichier mis en paramètre
+        Path path = FileSystems.getDefault().getPath("ressources/maps", nomFichier);
+        Queue<String> queue = new LinkedList<String>();
+        //enregistrement du fichier dans une queue contenant toutes les lignes
+        try (BufferedReader readerer = Files.newBufferedReader(path)) {
+            BufferedReader reader = Files.newBufferedReader(path);
             String line = readerer.readLine();
 
-            BufferedReader reader = Files.newBufferedReader(cheminDuFichier);
-
             while (((line = reader.readLine()) != null) ) {
-                List<Cell >ligneLST = new ArrayList<>();
-                List<Boolean> ligneB = new ArrayList<>();
-                for (int i=0; i<line.length(); i++) {
-                    if (line.charAt(i) =='S') {
-                        Cell celluleSpawn = new CellSpawn(0,0,0);
-                        ligneLST.add(celluleSpawn);
-                        ligneB.add(false);
-                    }
-                    else if (line.charAt(i) == 'B'){
-                        Cell celluleBase = new CellBase(0,0,0);
-                        ligneLST.add(celluleBase);
-                        ligneB.add(false);
-                    }
-                    else if (line.charAt(i)=='R') {
-                        Cell celluleRoad = new CellRoad(0,0,0);
-                        ligneLST.add(celluleRoad);
-                        ligneB.add(false);
-                    }
-                    else if (line.charAt(i)=='C') {
-                        Cell celluleConstructible = new CellConstructible(0,0,0);
-                        ligneLST.add(celluleConstructible);
-                        ligneB.add(false);
-                    }
-                    else if (line.charAt(i)=='X') {
-                        Cell celluleBorder = new CellBorder(0,0,0);
-                        ligneLST.add(celluleBorder);
-                        ligneB.add(false);
-                    }
-                }
-                quadrillage.add(ligneLST);
-                quadrillageB.add(ligneB);
+                queue.add(line);
             }
             reader.close();
         } 
@@ -79,7 +47,51 @@ public class Carte extends Niveau{
             System.out.println(e);
         }
 
-        //calcul du chemin
+        //on suppose que toutes les lignes du fichier font la même taille
+
+        //création d'un tableau de booleen aux dimensions du cichier qui va nous servir pour calculer le chemin
+        this.quadrillageB = new boolean[queue.size()][queue.peek().length()];
+
+        //création et remplissage du tableau quadrillage grâce au fichier enregistré dans la queue
+        quadrillage = new Cell[queue.size()][queue.peek().length()];
+
+        int i = 0;
+        while (!queue.isEmpty()) {
+            String line = queue.remove();
+            for(int j=0; j<line.length(); j++) {
+                if (line.charAt(j) =='S') {
+                    Cell celluleSpawn = new CellSpawn(0,0,0);
+                    quadrillage[i][j] = celluleSpawn;
+                    System.out.print(celluleSpawn);
+                }
+                else if (line.charAt(j) == 'B'){
+                    Cell celluleBase = new CellBase(0,0,0);
+                    quadrillage[i][j] = celluleBase;
+                    System.out.print(celluleBase);
+                }
+                else if (line.charAt(j)=='R') {
+                    Cell celluleRoad = new CellRoad(0,0,0);
+                    quadrillage[i][j] = celluleRoad;
+                    System.out.print(celluleRoad);
+                }
+                else if (line.charAt(j)=='C') {
+                    Cell celluleConstructible = new CellConstructible(0,0,0);
+                    quadrillage[i][j] = celluleConstructible;
+                    System.out.print(celluleConstructible);
+                }
+                else if (line.charAt(j)=='X') {
+                    Cell celluleBorder = new CellBorder(0,0,0);
+                    quadrillage[i][j] = celluleBorder;
+                    System.out.print(celluleBorder);
+                }
+            }
+            System.out.println();
+            i++;
+        }
+        calculChemin();
+    }
+
+    private List<Position<Integer, Integer>> calculChemin() {
         chemin = new ArrayList<>();
         Position<Integer,Integer> spawn = getPosCell('S');
         chemin.add(spawn);
@@ -89,40 +101,41 @@ public class Carte extends Niveau{
         Position<Integer,Integer> posCourante = getPosCell('S');
 
         /*
-         * Je parcours la liste par rapport à ses coordonnées donc l'origine est en haut à gauche
-         * et on descend pour incrémenter y, on va vers la gauche pour incrémenter x.
-         */
+        * Je parcours la liste par rapport à ses coordonnées donc l'origine est en haut à gauche
+        * et on descend pour incrémenter y, on va vers la gauche pour incrémenter x.
+        */
         while ((posCourante.getX() != base.getX()) || (posCourante.getY() != base.getY())) {
             posCourante = chemin.get(chemin.size()-1);
-            //indication de l'emplacement des cases comparées autout de la case courante
+            //indication de l'emplacement des cases comparées autour de la case courante
             //bas
-            if ((quadrillage.get(posCourante.getY()+1).get(posCourante.getX()).getChar() == 'R' || quadrillage.get(posCourante.getY()+1).get(posCourante.getX()).getChar() == 'B') && (!quadrillageB.get(posCourante.getY()+1).get(posCourante.getX()))) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()+1);
-                chemin.add(nvPosCourante);
-                quadrillageB.get(nvPosCourante.getY()).set(nvPosCourante.getX(),true);
-            }
-            //droit
-            if ((quadrillage.get(posCourante.getY()).get(posCourante.getX()+1).getChar() == 'R' || quadrillage.get(posCourante.getY()).get(posCourante.getX()+1).getChar() == 'B') && (!quadrillageB.get(posCourante.getY()).get(posCourante.getX()+1))) {
+            if ((quadrillage[posCourante.getX()+1][posCourante.getY()].getChar() == 'R' || quadrillage[posCourante.getX()+1][posCourante.getY()].getChar() == 'B') && (!quadrillageB[posCourante.getX()+1][posCourante.getY()])) {
                 Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX()+1,posCourante.getY());
                 chemin.add(nvPosCourante);
-                quadrillageB.get(nvPosCourante.getY()).set(nvPosCourante.getX(),true);
+                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+            }
+            //droite
+            if ((quadrillage[posCourante.getX()][posCourante.getY()+1].getChar() == 'R' || quadrillage[posCourante.getX()][posCourante.getY()+1].getChar() == 'B') && (!quadrillageB[posCourante.getX()][posCourante.getY()+1])) {
+                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()+1);
+                chemin.add(nvPosCourante);
+                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
             }
             //haut
-            if ((quadrillage.get(posCourante.getY()-1).get(posCourante.getX()).getChar() == 'R' || quadrillage.get(posCourante.getY()-1).get(posCourante.getX()).getChar() == 'B') && (!quadrillageB.get(posCourante.getY()-1).get(posCourante.getX()))) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()-1);
-                chemin.add(nvPosCourante);
-                quadrillageB.get(nvPosCourante.getY()).set(nvPosCourante.getX(),true);
-            }
-            //gauche
-            if ((quadrillage.get(posCourante.getY()).get(posCourante.getX()-1).getChar() == 'R' || quadrillage.get(posCourante.getY()).get(posCourante.getX()-1).getChar() == 'B') && (!quadrillageB.get(posCourante.getY()).get(posCourante.getX()-1))) {
+            if ((quadrillage[posCourante.getX()-1][posCourante.getY()].getChar() == 'R' || quadrillage[posCourante.getX()-1][posCourante.getY()].getChar() == 'B') && (!quadrillageB[posCourante.getX()-1][posCourante.getY()])) {
                 Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX()-1,posCourante.getY());
                 chemin.add(nvPosCourante);
-                quadrillageB.get(nvPosCourante.getY()).set(nvPosCourante.getX(),true);
+                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+            }
+            //gauche
+            if ((quadrillage[posCourante.getX()][posCourante.getY()-1].getChar() == 'R' || quadrillage[posCourante.getX()][posCourante.getY()-1].getChar() == 'B') && (!quadrillageB[posCourante.getX()][posCourante.getY()-1])) {
+                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()-1);
+                chemin.add(nvPosCourante);
+                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
             }
         }
+        return chemin;
     }
 
-    public List<List<Cell>> getCarte() {
+    public Cell[][] getCarte() {
         return quadrillage;
     }
 
@@ -145,7 +158,7 @@ public class Carte extends Niveau{
         StdDraw.rectangle(rectX, rectY, rectHalfWidth, rectHalfHeight);
 
         //calcul de la taille des cellules
-        int maxLength = Math.max(quadrillage.size(), quadrillage.get(0).size()); //compare hauteur et longueur de la carte
+        int maxLength = Math.max(quadrillage.length, quadrillage[0].length); //compare hauteur et longueur de la carte
         int ecart = Math.min(2*rectX/maxLength, 2*rectY/maxLength); //ecart entre le centre de 2 cases
 
         int halfLength = ecart/2;
@@ -153,14 +166,14 @@ public class Carte extends Niveau{
         int centerY = halfLength;
 
         //affichage
-        for (int i=0; i<quadrillage.size(); i++) {
-            int hauteur = quadrillage.size()-1;
-            for (int j=0; j<quadrillage.get(i).size(); j++) {
-                quadrillage.get(hauteur-i).get(j).setCenterX(centerX);
-                quadrillage.get(hauteur-i).get(j).setCenterY(centerY);
-                quadrillage.get(hauteur-i).get(j).setHalfLength(halfLength);
+        for (int i=0; i<quadrillage.length; i++) {
+            int hauteur = quadrillage.length-1;
+            for (int j=0; j<quadrillage[i].length; j++) {
+                quadrillage[hauteur-i][j].setCenterX(centerX);
+                quadrillage[hauteur-i][j].setCenterY(centerY);
+                quadrillage[hauteur-i][j].setHalfLength(halfLength);
 
-                quadrillage.get(hauteur-i).get(j).draw();
+                quadrillage[hauteur-i][j].draw();
                 centerX += ecart;
             }
             centerX = halfLength;
@@ -170,15 +183,14 @@ public class Carte extends Niveau{
 
     /**
      * Cette fonction sert seulement à trouver la case de spawn des ennemis et la case de la base du joueur dans la carte.
-     * j'inverse les valeurs i et j car comme dit dans le constructeur pour créer le chemin, j = coordonnées x et i = coordonnées y.
      * @param c le caractere de la case recherchée.
-     * @return la position(dans la liste) de la case.
+     * @return la position(dans le tableau) de la case.
      */
     private Position<Integer,Integer> getPosCell(char c) {
-        for(int i=0; i<quadrillage.size(); i++) {
-            for(int j=0; j<quadrillage.get(i).size(); j++) {
-                if (quadrillage.get(i).get(j).getChar() == c) {
-                    return new Position<Integer,Integer>(j, i);
+        for(int i=0; i<quadrillage.length; i++) {
+            for(int j=0; j<quadrillage[i].length; j++) {
+                if (quadrillage[i][j].getChar() == c) {
+                    return new Position<Integer,Integer>(i, j);
                 }
             }
         }
@@ -187,9 +199,9 @@ public class Carte extends Niveau{
 
     public String toString() {
         String map = "";
-        for (int i = 0; i < quadrillage.size(); i++) {
-            for (int j = 0; j < quadrillage.get(i).size(); j++) {
-                map += quadrillage.get(i).get(j).toString();
+        for (int i = 0; i < quadrillage.length; i++) {
+            for (int j = 0; j < quadrillage[i].length; j++) {
+                map += quadrillage[i][j].toString();
             }
             map+= "\n";
         } 

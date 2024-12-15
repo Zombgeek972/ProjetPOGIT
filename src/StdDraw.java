@@ -1,4 +1,4 @@
-package libraries;
+
 
 /******************************************************************************
  *  Compilation:  javac StdDraw.java

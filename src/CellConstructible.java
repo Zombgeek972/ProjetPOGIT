@@ -1,5 +1,4 @@
 import java.awt.Color;
-import libraries.StdDraw;
 
 public class CellConstructible extends Cell{
     private static Color color = StdDraw.LIGHT_GRAY;

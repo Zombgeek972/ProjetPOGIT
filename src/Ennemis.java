@@ -1,6 +1,4 @@
 import java.util.List;
-
-import libraries.StdDraw;
 public class Ennemis extends Combattant {
     private double speed;
     private double reward;

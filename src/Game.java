@@ -1,5 +1,3 @@
-import libraries.StdDraw;
-
 public class Game{
     Carte carte;
 

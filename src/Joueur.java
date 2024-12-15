@@ -1,4 +1,3 @@
-import libraries.StdDraw;
 import java.awt.Color;
 
 public class Joueur {

@@ -1,5 +1,4 @@
 import java.awt.Color;
-import libraries.StdDraw;
 abstract class Cell extends Game{
     private char c;
     private boolean constructible;
