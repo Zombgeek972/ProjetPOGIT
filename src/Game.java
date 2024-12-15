@@ -33,7 +33,7 @@ public class Game{
 
         Joueur joueur = new Joueur();
         joueur.draw();
-        Ennemis ennemi = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 8, 50, "aa", carte.getChemin(), carte.getCarte());
+        Ennemis ennemi = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 8, 50, "5-8.mtp", carte.getChemin(), carte.getCarte());
         ennemi.draw();
         StdDraw.show();
     }
