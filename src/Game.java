@@ -1,6 +1,7 @@
 public class Game{
     Carte carte;
     Joueur joueur;
+    Ennemis ennemis;
     Cell ancienneCell;
     Cell cellule;
 
@@ -32,7 +33,7 @@ public class Game{
 
         //chargement de toutes les zones du canvas
         //chargement de la carte
-        carte = new Carte("testMap.mtp");
+        carte = new Carte("5-8.mtp");
         carte.draw();
 
         //chargement du joueur
@@ -40,8 +41,11 @@ public class Game{
         joueur.draw();
 
         //chargement des ennemis
-        Ennemis ennemi = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 8, 50, "5-8.mtp", carte.getChemin(), carte.getCarte());
-        ennemi.draw();
+        int x = carte.getSpawn().getCenterX();
+        int y = carte.getSpawn().getCenterY();
+        ennemis = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 1, 50, "5-8.mtp", carte.getChemin(), carte.getCarte(), x, y);
+        //affichage de l'ennemi dans la cellule de spawn
+        ennemis.draw();
 
         //affichage
         StdDraw.show();
@@ -53,34 +57,48 @@ public class Game{
 
         double cooSourisX = StdDraw.mouseX();
         double cooSourisY = StdDraw.mouseY();
-        cellule = getCellCoo(cooSourisX, cooSourisY);
+        //cellule = getCellCoo(cooSourisX, cooSourisY);
 
         //si il y a une ancienne cellule d'enregistrée et que la cellule survolée par la souris est différente
-        if (ancienneCell != null && cellule != ancienneCell) {
+        /*if (ancienneCell != null && cellule != ancienneCell) {
             ancienneCell.setColorBorderBlack();
             ancienneCell.draw();
-        }
+        }*/
 
         //si on survole la carte
-        if (cellule != null) {
+        /*if (cellule != null) {
             cellule.setColorBorderWhite();
 
             if (StdDraw.isMousePressed()) {
                 if (cellule.getChar() == 'C') {
-                    t.draw(cellule.getCenterX(), cellule.getCenterY(), cellule.getHalfLength() - 0.2*cellule.getHalfLength());
+                    cellule.setTour(t);
                 }
             }
             ancienneCell = cellule;
             cellule.draw();
             StdDraw.show();
-        }
+        }*/
         //si on sort de la carte on remet le bord de la derniere cellule en noir
-        else if (ancienneCell != null) {
+        /*else if (ancienneCell != null) {
             ancienneCell.setColorBorderBlack();
             ancienneCell.draw();
             StdDraw.show();
             ancienneCell = null;
+        }*/
+
+        if (StdDraw.isMousePressed()) {
+            cellule = getCellCoo(cooSourisX, cooSourisY);
+            if (cellule != null) {
+                if (cellule.getChar() == 'C') {
+                    cellule.setTour(t);
+                    cellule.draw();
+                    StdDraw.show();
+                }
+            }
         }
+        ennemis.avanceBas();
+        ennemis.draw();
+        StdDraw.show();
     }
 
     /**

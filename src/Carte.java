@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -27,7 +26,9 @@ import java.util.Queue;
 public class Carte extends Niveau{
     private Cell[][] quadrillage;
     private boolean[][] quadrillageB;
-    private List<Position<Integer, Integer>> chemin;
+    private List<Cell> chemin;
+    private Cell spawn;
+    private Cell base;
 
     public Carte(String nomFichier) {
         //récupération du fichier mis en paramètre
@@ -82,48 +83,51 @@ public class Carte extends Niveau{
             }
             i++;
         }
+
+        this.spawn = getPosCell('S');
+        this.base = getPosCell('B');
+
         calculChemin();
     }
 
-    private List<Position<Integer, Integer>> calculChemin() {
-        chemin = new ArrayList<>();
-        Position<Integer,Integer> spawn = getPosCell('S');
+    private List<Cell> calculChemin() {
+
+        chemin = new LinkedList<>();
         chemin.add(spawn);
 
-        Position<Integer,Integer> base = getPosCell('B');
-
-        Position<Integer,Integer> posCourante = getPosCell('S');
+        Cell posCourante = spawn;
+        Cell nvPosCourante = null;
 
         /*
         * Je parcours la liste par rapport à ses coordonnées donc l'origine est en haut à gauche
         * et on descend pour incrémenter y, on va vers la gauche pour incrémenter x.
         */
-        while ((posCourante.getX() != base.getX()) || (posCourante.getY() != base.getY())) {
+        while ((posCourante.getI() != base.getI()) || (posCourante.getJ() != base.getJ())) {
             posCourante = chemin.get(chemin.size()-1);
             //indication de l'emplacement des cases comparées autour de la case courante
             //bas
-            if ((quadrillage[posCourante.getX()+1][posCourante.getY()].getChar() == 'R' || quadrillage[posCourante.getX()+1][posCourante.getY()].getChar() == 'B') && (!quadrillageB[posCourante.getX()+1][posCourante.getY()])) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX()+1,posCourante.getY());
+            if ((quadrillage[posCourante.getI()+1][posCourante.getJ()].getChar() == 'R' || quadrillage[posCourante.getI()+1][posCourante.getJ()].getChar() == 'B') && (!quadrillageB[posCourante.getI()+1][posCourante.getJ()])) {
+                nvPosCourante = quadrillage[posCourante.getI()+1][posCourante.getJ()];
                 chemin.add(nvPosCourante);
-                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+                quadrillageB[nvPosCourante.getI()][nvPosCourante.getJ()] = true;
             }
             //droite
-            if ((quadrillage[posCourante.getX()][posCourante.getY()+1].getChar() == 'R' || quadrillage[posCourante.getX()][posCourante.getY()+1].getChar() == 'B') && (!quadrillageB[posCourante.getX()][posCourante.getY()+1])) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()+1);
+            if ((quadrillage[posCourante.getI()][posCourante.getJ()+1].getChar() == 'R' || quadrillage[posCourante.getI()][posCourante.getJ()+1].getChar() == 'B') && (!quadrillageB[posCourante.getI()][posCourante.getJ()+1])) {
+                nvPosCourante = quadrillage[posCourante.getI()][posCourante.getJ()+1];
                 chemin.add(nvPosCourante);
-                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+                quadrillageB[nvPosCourante.getI()][nvPosCourante.getJ()] = true;
             }
             //haut
-            if ((quadrillage[posCourante.getX()-1][posCourante.getY()].getChar() == 'R' || quadrillage[posCourante.getX()-1][posCourante.getY()].getChar() == 'B') && (!quadrillageB[posCourante.getX()-1][posCourante.getY()])) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX()-1,posCourante.getY());
+            if ((quadrillage[posCourante.getI()-1][posCourante.getJ()].getChar() == 'R' || quadrillage[posCourante.getI()-1][posCourante.getJ()].getChar() == 'B') && (!quadrillageB[posCourante.getI()-1][posCourante.getJ()])) {
+                nvPosCourante = quadrillage[posCourante.getI()-1][posCourante.getJ()];
                 chemin.add(nvPosCourante);
-                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+                quadrillageB[nvPosCourante.getI()][nvPosCourante.getJ()] = true;
             }
             //gauche
-            if ((quadrillage[posCourante.getX()][posCourante.getY()-1].getChar() == 'R' || quadrillage[posCourante.getX()][posCourante.getY()-1].getChar() == 'B') && (!quadrillageB[posCourante.getX()][posCourante.getY()-1])) {
-                Position<Integer,Integer> nvPosCourante = new Position<>(posCourante.getX(),posCourante.getY()-1);
+            if ((quadrillage[posCourante.getI()][posCourante.getJ()-1].getChar() == 'R' || quadrillage[posCourante.getI()][posCourante.getJ()-1].getChar() == 'B') && (!quadrillageB[posCourante.getI()][posCourante.getJ()-1])) {
+                nvPosCourante = quadrillage[posCourante.getI()][posCourante.getJ()-1];
                 chemin.add(nvPosCourante);
-                quadrillageB[nvPosCourante.getX()][nvPosCourante.getY()] = true;
+                quadrillageB[nvPosCourante.getI()][nvPosCourante.getJ()] = true;
             }
         }
         return chemin;
@@ -132,9 +136,14 @@ public class Carte extends Niveau{
     public Cell[][] getCarte() {
         return quadrillage;
     }
-
-    public List<Position<Integer,Integer>> getChemin() {
+    public List<Cell> getChemin() {
         return chemin;
+    }
+    public Cell getSpawn() {
+        return spawn;
+    }
+    public Cell getBase() {
+        return base;
     }
 
     /**
@@ -181,11 +190,11 @@ public class Carte extends Niveau{
      * @param c le caractere de la case recherchée.
      * @return la position(dans le tableau) de la case.
      */
-    private Position<Integer,Integer> getPosCell(char c) {
+    private Cell getPosCell(char c) {
         for(int i=0; i<quadrillage.length; i++) {
             for(int j=0; j<quadrillage[i].length; j++) {
                 if (quadrillage[i][j].getChar() == c) {
-                    return new Position<Integer,Integer>(i, j);
+                    return quadrillage[i][j];
                 }
             }
         }
