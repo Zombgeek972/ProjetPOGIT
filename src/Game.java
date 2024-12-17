@@ -32,6 +32,11 @@ public class Game{
         StdDraw.enableDoubleBuffering () ;
 
         //chargement de toutes les zones du canvas
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.rectangle(350, 350, 350, 350);
+        StdDraw.rectangle(856, 688, 144, 12);
+        StdDraw.rectangle(856, 641, 144, 25);
+        StdDraw.rectangle(856, 303, 144, 303);
         //chargement de la carte
         carte = new Carte("5-8.mtp");
         carte.draw();
@@ -92,11 +97,11 @@ public class Game{
                 if (cellule.getChar() == 'C') {
                     cellule.setTour(t);
                     cellule.draw();
-                    StdDraw.show();
                 }
             }
         }
-        ennemis.avanceBas();
+        ennemis.avance(deltaTimeSec);
+        carte.draw();
         ennemis.draw();
         StdDraw.show();
     }

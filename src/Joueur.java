@@ -39,13 +39,10 @@ public class Joueur {
     }
 
     public void draw() {
-        //bordure de la zone joueur
         int centerX = 856;
         int centerY = 641;
         int halfWidth = 144;
         int halfHeight = 25;
-
-        StdDraw.rectangle(centerX, centerY, halfWidth, halfHeight);
 
         //pièce
         int radius = 25;

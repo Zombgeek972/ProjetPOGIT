@@ -150,19 +150,9 @@ public class Carte extends Niveau{
      * dessine la carte sur le canvas
      */
     public void draw() {
-        //Zone de la carte
-        StdDraw.setPenColor(StdDraw.BLACK);
-
-        //dimensions de la zone
-        int rectX = 350;
-        int rectY = 350;
-        int rectHalfWidth = 350;
-        int rectHalfHeight = 350;
-        StdDraw.rectangle(rectX, rectY, rectHalfWidth, rectHalfHeight);
-
         //calcul de la taille des cellules
         int maxLength = Math.max(quadrillage.length, quadrillage[0].length); //compare hauteur et longueur de la carte
-        int ecart = Math.min(2*rectX/maxLength, 2*rectY/maxLength); //ecart entre le centre de 2 cases
+        int ecart = Math.min(700/maxLength, 700/maxLength); //ecart entre le centre de 2 cases
 
         int halfLength = ecart/2;
         int centerX = halfLength;
