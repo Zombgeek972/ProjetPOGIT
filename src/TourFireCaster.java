@@ -5,8 +5,8 @@ public class TourFireCaster extends Tours {
     private String type;
     private String nom;
 
-    public TourFireCaster(String type, String nom) {
-        super(30, 10, 0.5, 2.5, Element.Feu, 100);
+    public TourFireCaster(String type, String nom, Joueur joueur) {
+        super(30, 10, 0.5, 2.5, Element.Feu, 100, joueur);
         this.type = type;
         this.nom = nom;
     }

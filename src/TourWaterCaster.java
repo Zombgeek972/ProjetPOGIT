@@ -5,8 +5,8 @@ public class TourWaterCaster extends Tours {
     private String type;
     private String nom;
 
-    public TourWaterCaster(String type, String nom) {
-        super(30, 3, 1, 4, Element.Eau, 50);
+    public TourWaterCaster(String type, String nom, Joueur joueur) {
+        super(30, 3, 1, 4, Element.Eau, 50, joueur);
         this.type = type;
         this.nom = nom;
     }

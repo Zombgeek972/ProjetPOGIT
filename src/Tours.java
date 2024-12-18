@@ -2,8 +2,8 @@ abstract class Tours extends Combattant {
     private int cout;
 
     public Tours(int pv, int atk, double atkSpeed, double range, Element element,
-            int cout) {
-        super(pv, atk, atkSpeed, range, element);
+            int cout, Joueur joueur) {
+        super(pv, atk, atkSpeed, range, element, joueur);
         this.cout = cout;
     }
 

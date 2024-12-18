@@ -9,8 +9,6 @@ public class CellBorder extends Cell{
         super('X', new Color(red, green, blue), i, j);
     }
 
-    public void setTour(Tours tour){}
-
     public String toString() {
         return super.toString();
     }

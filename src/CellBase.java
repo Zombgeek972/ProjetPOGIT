@@ -7,8 +7,6 @@ public class CellBase extends Cell{
         super('B', color, i, j);
     }
 
-    public void setTour(Tours tour){}
-
     public String toString() {
         return super.toString();
     }

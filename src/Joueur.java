@@ -39,6 +39,7 @@ public class Joueur {
     }
 
     public void draw() {
+        //dimensions de la zone joueur
         int centerX = 856;
         int centerY = 641;
         int halfWidth = 144;

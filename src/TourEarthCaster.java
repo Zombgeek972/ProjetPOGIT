@@ -7,8 +7,8 @@ public class TourEarthCaster extends Tours {
     private String type;
     private String nom;
 
-    public TourEarthCaster(String type, String nom) {
-        super(50, 7, 0.5, 2.5, Element.Terre, 100);
+    public TourEarthCaster(String type, String nom, Joueur joueur) {
+        super(50, 7, 0.5, 2.5, Element.Terre, 100, joueur);
         this.type = type;
         this.nom = nom;
     }

@@ -1,20 +1,20 @@
 import java.util.List;
 public class Ennemis extends Combattant {
-    private double x;
-    private double y;
-    private double speedCell; // nb de cell/seconde
-    private int speedPix; // nb de pixels/sec
-    private int indiceCellCourante; // indice de la cellule courante dans le chemin
+    private int x;
+    private int y;
+    private double speedCell;
+    private int speedPix;
+    private int indiceCellCourante;
     private int direction;
     private double reward;
     private List<Cell> chemin;
     private Cell[][] quadrillage;
     
     public Ennemis(int pv, int atk, double atkSpeed, double range, Element element,
-            double speedCell, double reward, String nomfichier, List<Cell> chemin, Cell[][] quadrillage, double x, double y) {
-        super(pv, atk, atkSpeed, range, element);
+            double speedCell, double reward, String nomfichier, List<Cell> chemin, Cell[][] quadrillage, int x, int y, Joueur joueur) {
+        super(pv, atk, atkSpeed, range, element, joueur);
         this.speedCell = speedCell;
-        this.speedPix = (int) speedCell * this.chemin.get(0).getHalfLength()*2;
+        this.speedPix = (int) speedCell*chemin.get(0).getHalfLength()*2;
         this.indiceCellCourante = 0;
         this.reward = reward;
         this.chemin = chemin;
@@ -24,72 +24,32 @@ public class Ennemis extends Combattant {
     }
 
     /**
-     * met la direction dans laquelle aller, fonctionne dans le sens des aiguilles d'une montre, 0 : haut, 1 : droite, 2 : bas, 3 : gauche.
-     * @param direction la nouvelle diréction
+     * calcul la direction dans laquelle aller, on tourne dans le sens des aiguilles d'une montre, 0 : haut, 1 : droite, 2 : bas, 3 : gauche
      */
-    private void setDirection(int direction) {
-        switch (direction) {
-            case 0:
-                this.direction = direction;
-                break;
-            case 1:
-                this.direction = direction;
-                break;
-            case 2:
-                this.direction = direction;
-                break;
-            case 3:
-                this.direction = direction;
-                break;
-            default:
-                //TODO erreur mauvais param
-                break;
-        }
-    }
-
-    /**
-     * prend en parametre la position courante de l'ennemi après qu'il ai bougé sur la carte
-     * @return true si l'ennemi est dans la même case qu'avant, false sinon
-     */
-    private boolean isInCell() {
-        Cell celluleCourante = chemin.get(indiceCellCourante);
-        return celluleCourante.getCenterX() - celluleCourante.getHalfLength() < x && x < celluleCourante.getCenterX() + celluleCourante.getHalfLength() && celluleCourante.getCenterY() - celluleCourante.getHalfLength() < y && y < celluleCourante.getCenterY() + celluleCourante.getHalfLength();
-    }
-
-    private void setCellCourante() {
-        if (isInCell()) {
-            return;
-        }
-        else {
-            // si l'ancienne cellule courante n'était pas l'avant derniere cellule
-            if (indiceCellCourante < chemin.size()-1) {
-                for (indiceCellCourante++; indiceCellCourante<chemin.size(); indiceCellCourante++) {
-                    if (isInCell()) {
-                        break;
-                    }
-                }
+    private void setDirection() {
+        //si on est entre l'avant derniere case et la base, on fait juste un tout droit , pas besoin de recalculer
+        if (chemin.get(indiceCellCourante).getChar() != 'B') {
+            int centreXCaseCourante = chemin.get(indiceCellCourante).getCenterX();
+            int centreXCaseSuivante = chemin.get(indiceCellCourante+1).getCenterX();
+            //a droite ?
+            if (centreXCaseCourante - centreXCaseSuivante < 0) {
+                direction = 1;
             }
-            else {
-                indiceCellCourante++;
+            //a gauche ?
+            else if (centreXCaseCourante - centreXCaseSuivante > 0) {
+                direction = 3;
+            }
+            int centreYCaseCourante = chemin.get(indiceCellCourante).getCenterY();
+            int centreYCaseSuivante = chemin.get(indiceCellCourante+1).getCenterY();
+            //en haut ?
+            if (centreYCaseCourante- centreYCaseSuivante < 0) {
+                direction = 0;
+            }
+            //en bas ?
+            else if (centreYCaseCourante- centreYCaseSuivante > 0) {
+                direction = 2;
             }
         }
-    }
-
-    /**
-     * compare tous les cas possible lors du déplacement d'un ennemi, et le fait se déplacer
-     * @param direction la direction dans laquelle il doir se diriger
-     */
-    private void deplacement(double deltaTimeSec, int direction) {
-        //TODO
-        Cell celluleCourante = chemin.get(indiceCellCourante);
-        int deplacement = (int) deltaTimeSec*speedPix;
-        //si y et y + deplacement sont dans la même case
-        if (y > chemin.get(indiceCellCourante).getCenterY() && y + deplacement > chemin.get(indiceCellCourante+1).getCenterY()) {
-
-        }
-        //si si y et y + deplacement change de case, on change la cellule actuelle de l'ennemi
-        /*si y et y + deplacement passe par le centre d'une case, on va jusqu'au centre, on enregistre ce qui nous reste a parcourir
-        et on regarde si on est a la base, on regarde vers ou aller pour continuer le chemin*/
     }
 
     public double getSpeedCell() {
@@ -102,6 +62,20 @@ public class Ennemis extends Combattant {
         return reward;
     }
 
+    private boolean isOnCell() {
+        return chemin.get(indiceCellCourante).getCenterX() - chemin.get(indiceCellCourante).getHalfLength() <= x && x <= chemin.get(indiceCellCourante).getCenterX() + chemin.get(indiceCellCourante).getHalfLength() &&
+        chemin.get(indiceCellCourante).getCenterY() - chemin.get(indiceCellCourante).getHalfLength() <= y && y <= chemin.get(indiceCellCourante).getCenterY() + chemin.get(indiceCellCourante).getHalfLength();
+    }
+
+    public Cell getCellCourante() {
+        return chemin.get(indiceCellCourante);
+    }
+    private void setCellCourante() {
+        if (!isOnCell()) {
+            indiceCellCourante++;
+        }
+    }
+
     public double getX() {
         return x;
     }
@@ -109,28 +83,125 @@ public class Ennemis extends Combattant {
         return y;
     }
 
-    private void avanceBas(int pix) {
-        y -= pix;
+    private void avanceHaut(int deplacement) {
+        y += deplacement;
     }
-    private void avanceHaut(int pix) {
-        y += pix;
+    private void avanceBas(int deplacement) {
+        y -= deplacement;
     }
-    private void avanceGauche(int pix) {
-        x -= pix;
+    private void avanceGauche(int deplacement) {
+        x -= deplacement;
     }
-    private void avanceDroite(int pix) {
-        x += pix;
+    private void avanceDroite(int deplacement) {
+        x += deplacement;
     }
-
+    
     public void avance(double deltaTimeSec) {
-        //TODO va appeler deplacement et setCellCourante
+        int deplacement = (int) (speedPix*deltaTimeSec);
+        setCellCourante();
+        Cell celluleCourante = chemin.get(indiceCellCourante);
+
+        switch (direction) {
+            //haut
+            case 0:
+                //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
+                if (celluleCourante.getCenterY() >= y && y + deplacement >= celluleCourante.getCenterY()) {
+                    avanceHaut(celluleCourante.getCenterY()-y);
+                    if (!(chemin.size() == indiceCellCourante+1)) {
+                        setDirection();
+                        System.out.println(direction);
+                        //on finit le deplacement avec la bonne direction
+                        switch (direction) {
+                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                        }
+                    }
+                    else {
+                        //TODO enlever de la vie au joueur
+                        break;
+                    }
+                }
+                avanceHaut(deplacement);
+                break;
+            //droite
+            case 1:
+                //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
+                if (celluleCourante.getCenterX() >= x && x + deplacement >= celluleCourante.getCenterX()) {
+                    avanceDroite(celluleCourante.getCenterX()-x);
+                    if (!(chemin.size() == indiceCellCourante+1)) {
+                        setDirection();
+                        System.out.println(direction);
+                        //on finit le deplacement avec la bonne direction
+                        switch (direction) {
+                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                        }
+                    }
+                    else {
+                        //TODO enlever de la vie au joueur
+                        break;
+                    }
+                }
+                avanceDroite(deplacement);
+                break;
+            //bas
+            case 2:
+                if (celluleCourante.getCenterY() <= y && y - deplacement <= celluleCourante.getCenterY()) {
+                    avanceBas(celluleCourante.getCenterY()-y);
+                    if (!(chemin.size() == indiceCellCourante+1)) {
+                        setDirection();
+                        System.out.println(direction);
+                        //on finit le deplacement avec la bonne direction
+                        switch (direction) {
+                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                        }
+                    }
+                    else {
+                        //TODO enlever de la vie au joueur
+                        break;
+                    }
+                }
+
+                avanceBas(deplacement);
+                break;
+            //gauche
+            case 3:
+                if (celluleCourante.getCenterX() <= x && x - deplacement <= celluleCourante.getCenterX()) {
+                    avanceGauche(celluleCourante.getCenterX()-x);
+                    if (!(chemin.size() == indiceCellCourante+1)) {
+                        setDirection();
+                        System.out.println(direction);
+                        //on finit le deplacement avec la bonne direction
+                        switch (direction) {
+                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                        }
+                    }
+                    else {
+                        //TODO enlever de la vie au joueur
+                        break;
+                    }
+                }
+                avanceGauche(deplacement);
+                break;
+            default:
+                break;
         }
     }
 
     public void draw() {
         //skin de l'ennemi
         StdDraw.setPenColor(StdDraw.BLACK);
-        StdDraw.filledCircle(x, y, quadrillage[chemin.get(0).getI()][chemin.get(0).getJ()].getHalfLength()*0.2);
+        StdDraw.filledCircle(x, y, quadrillage[chemin.get(0).getI()][chemin.get(0).getJ()].getHalfLength()*0.4);
         //barre de vie
         StdDraw.setPenColor(StdDraw.GRAY);
         StdDraw.filledRectangle(x, y + 25, 40, 8);
@@ -145,6 +216,6 @@ public class Ennemis extends Combattant {
     }
 
     public String toString() {
-        return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+ "), speedCell : "+speedCell+", speedPix : "+speedPix+", récompense : "+reward;
+        return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+ "), speed : "+speedCell+", speedPix : "+speedPix+", récompense : "+reward;
     }
 }

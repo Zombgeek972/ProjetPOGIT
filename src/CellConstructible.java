@@ -8,6 +8,9 @@ public class CellConstructible extends Cell{
         super('C', color, i, j);
     }
 
+    public Tours getTour() {
+        return tour;
+    }
     public void setTour(Tours tour) {
         this.tour = tour;
     }

@@ -6,13 +6,15 @@ abstract class Combattant {
     private double atkSpeed;
     private double range;
     private Element element;
+    private Joueur joueur;
 
-    public Combattant(int pv, int atk, double atkSpeed, double range, Element element) {
+    public Combattant(int pv, int atk, double atkSpeed, double range, Element element, Joueur joueur) {
         this.pv = pv;
         this.atk = atk;
         this.atkSpeed = atkSpeed;
         this.range = range;
         this.element = element;
+        this.joueur = joueur;
     }
 
     public int getPv() {
@@ -29,6 +31,9 @@ abstract class Combattant {
     }
     public Element getElement() {
         return element;
+    }
+    public Joueur getJoueur() {
+        return joueur;
     }
 
     public double vulnérabitité(Combattant c) {

@@ -7,8 +7,6 @@ public class CellSpawn extends Cell{
         super('S', color, i, j);
     }
 
-    public void setTour(Tours tour){}
-
     public String toString() {
         return super.toString();
     }

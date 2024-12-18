@@ -5,8 +5,8 @@ public class TourArcher extends Tours {
     private String type;
     private String nom;
 
-    public TourArcher(String type, String nom) {
-        super(30, 5, 1, 2, Element.Neutre, 20);
+    public TourArcher(String type, String nom, Joueur joueur) {
+        super(30, 5, 1, 2, Element.Neutre, 20, joueur);
         this.type = type;
         this.nom = nom;
     }

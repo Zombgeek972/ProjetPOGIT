@@ -85,8 +85,6 @@ abstract class Cell extends Game{
         StdDraw.square(centerX, centerY, halfLength);
     }
 
-    abstract void setTour(Tours tour);
-
     /**
      * @apiNote les parametres sont les coordonnées de la souris, elles sont comparées avec les coordonnées de la case
      * @param x coordonnées x de la souris

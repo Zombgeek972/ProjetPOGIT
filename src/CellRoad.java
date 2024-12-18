@@ -9,8 +9,6 @@ public class CellRoad extends Cell{
         super('R', new Color(red, green, blue), i, j);
     }
 
-    public void setTour(Tours tour){}
-
     public String toString() {
         return super.toString();
     }

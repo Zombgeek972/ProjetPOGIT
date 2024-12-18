@@ -32,13 +32,13 @@ public class Game{
         StdDraw.enableDoubleBuffering () ;
 
         //chargement de toutes les zones du canvas
-        StdDraw.setPenColor(StdDraw.BLACK);
-        StdDraw.rectangle(350, 350, 350, 350);
-        StdDraw.rectangle(856, 688, 144, 12);
-        StdDraw.rectangle(856, 641, 144, 25);
-        StdDraw.rectangle(856, 303, 144, 303);
+        StdDraw.rectangle(350, 350, 350, 350); //zone map
+        StdDraw.rectangle(856, 688, 144, 12); //zone level
+        StdDraw.rectangle(856, 641, 144, 25); //zone joueur
+        StdDraw.rectangle(856, 303, 144, 303);//zone magasin
+        
         //chargement de la carte
-        carte = new Carte("5-8.mtp");
+        carte = new Carte("4-4.mtp");
         carte.draw();
 
         //chargement du joueur
@@ -48,7 +48,7 @@ public class Game{
         //chargement des ennemis
         int x = carte.getSpawn().getCenterX();
         int y = carte.getSpawn().getCenterY();
-        ennemis = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 1, 50, "5-8.mtp", carte.getChemin(), carte.getCarte(), x, y);
+        ennemis = new Ennemis(10, 5, 3.5, 2.0, Element.Air, 1, 50, "5-8.mtp", carte.getChemin(), carte.getCarte(), x, y, joueur);
         //affichage de l'ennemi dans la cellule de spawn
         ennemis.draw();
 
@@ -56,12 +56,9 @@ public class Game{
         StdDraw.show();
     }
 
-    Tours t = new TourArcher("none", "kakou kakou");
+    Tours t = new TourArcher("none", "kakou kakou", joueur);
 
     private void update ( double deltaTimeSec ){
-
-        double cooSourisX = StdDraw.mouseX();
-        double cooSourisY = StdDraw.mouseY();
         //cellule = getCellCoo(cooSourisX, cooSourisY);
 
         //si il y a une ancienne cellule d'enregistrée et que la cellule survolée par la souris est différente
@@ -92,17 +89,26 @@ public class Game{
         }*/
 
         if (StdDraw.isMousePressed()) {
+            double cooSourisX = StdDraw.mouseX();
+            double cooSourisY = StdDraw.mouseY();
             cellule = getCellCoo(cooSourisX, cooSourisY);
             if (cellule != null) {
                 if (cellule.getChar() == 'C') {
-                    cellule.setTour(t);
-                    cellule.draw();
+                    CellConstructible celluleCastee = (CellConstructible) cellule;
+                    if (celluleCastee.getTour() == null && joueur.getMoney()-t.getCout() >= 0) {
+                        celluleCastee.setTour(t);
+                        joueur.enleveMonnaie(joueur.getMoney()-t.getCout());
+
+                        cellule.draw();
+                        joueur.draw();
+                    }
                 }
             }
         }
         ennemis.avance(deltaTimeSec);
         carte.draw();
         ennemis.draw();
+        joueur.draw();
         StdDraw.show();
     }
 
