@@ -26,7 +26,7 @@ public class Joueur {
         money += montant;
     }
     public void enleveMonnaie(int montant) {
-        money += montant;
+        money -= montant;
     }
 
     public void ajouteVie(int quantité) {
@@ -35,6 +35,9 @@ public class Joueur {
     public void enleveVie(int quantite) {
         if (hp - quantite >= 0) {
             hp -= quantite;
+        }
+        else {
+            hp = 0;
         }
     }
 

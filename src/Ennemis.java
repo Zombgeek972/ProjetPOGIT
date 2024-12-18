@@ -101,100 +101,105 @@ public class Ennemis extends Combattant {
         setCellCourante();
         Cell celluleCourante = chemin.get(indiceCellCourante);
 
-        switch (direction) {
-            //haut
-            case 0:
-                //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
-                if (celluleCourante.getCenterY() >= y && y + deplacement >= celluleCourante.getCenterY()) {
-                    avanceHaut(celluleCourante.getCenterY()-y);
-                    if (!(chemin.size() == indiceCellCourante+1)) {
-                        setDirection();
-                        System.out.println(direction);
-                        //on finit le deplacement avec la bonne direction
-                        switch (direction) {
-                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+        if (chemin.get(chemin.size()-1).getCenterX() == x && chemin.get(chemin.size()-1).getCenterY() == y) {
+            getJoueur().enleveVie(getAtk());
+        }
+        else {
+            switch (direction) {
+                //haut
+                case 0:
+                    //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
+                    if (celluleCourante.getCenterY() >= y && y + deplacement >= celluleCourante.getCenterY()) {
+                        avanceHaut(celluleCourante.getCenterY()-y);
+                        if (!(chemin.size() == indiceCellCourante+1)) {
+                            setDirection();
+                            System.out.println(direction);
+                            //on finit le deplacement avec la bonne direction
+                            switch (direction) {
+                                case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            }
+                        }
+                        else {
+                            getJoueur().enleveVie(getAtk());
+                            break;
                         }
                     }
-                    else {
-                        //TODO enlever de la vie au joueur
-                        break;
-                    }
-                }
-                avanceHaut(deplacement);
-                break;
-            //droite
-            case 1:
-                //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
-                if (celluleCourante.getCenterX() >= x && x + deplacement >= celluleCourante.getCenterX()) {
-                    avanceDroite(celluleCourante.getCenterX()-x);
-                    if (!(chemin.size() == indiceCellCourante+1)) {
-                        setDirection();
-                        System.out.println(direction);
-                        //on finit le deplacement avec la bonne direction
-                        switch (direction) {
-                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                    avanceHaut(deplacement);
+                    break;
+                //droite
+                case 1:
+                    //si on est en dessous du centre de notre case courante et qu'on va depasser le centre au prochain deplacement
+                    if (celluleCourante.getCenterX() >= x && x + deplacement >= celluleCourante.getCenterX()) {
+                        avanceDroite(celluleCourante.getCenterX()-x);
+                        if (!(chemin.size() == indiceCellCourante+1)) {
+                            setDirection();
+                            System.out.println(direction);
+                            //on finit le deplacement avec la bonne direction
+                            switch (direction) {
+                                case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            }
+                        }
+                        else {
+                            //TODO enlever de la vie au joueur
+                            break;
                         }
                     }
-                    else {
-                        //TODO enlever de la vie au joueur
-                        break;
-                    }
-                }
-                avanceDroite(deplacement);
-                break;
-            //bas
-            case 2:
-                if (celluleCourante.getCenterY() <= y && y - deplacement <= celluleCourante.getCenterY()) {
-                    avanceBas(celluleCourante.getCenterY()-y);
-                    if (!(chemin.size() == indiceCellCourante+1)) {
-                        setDirection();
-                        System.out.println(direction);
-                        //on finit le deplacement avec la bonne direction
-                        switch (direction) {
-                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                    avanceDroite(deplacement);
+                    break;
+                //bas
+                case 2:
+                    if (celluleCourante.getCenterY() <= y && y - deplacement <= celluleCourante.getCenterY()) {
+                        avanceBas(celluleCourante.getCenterY()-y);
+                        if (!(chemin.size() == indiceCellCourante+1)) {
+                            setDirection();
+                            System.out.println(direction);
+                            //on finit le deplacement avec la bonne direction
+                            switch (direction) {
+                                case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            }
+                        }
+                        else {
+                            //TODO enlever de la vie au joueur
+                            break;
                         }
                     }
-                    else {
-                        //TODO enlever de la vie au joueur
-                        break;
-                    }
-                }
 
-                avanceBas(deplacement);
-                break;
-            //gauche
-            case 3:
-                if (celluleCourante.getCenterX() <= x && x - deplacement <= celluleCourante.getCenterX()) {
-                    avanceGauche(celluleCourante.getCenterX()-x);
-                    if (!(chemin.size() == indiceCellCourante+1)) {
-                        setDirection();
-                        System.out.println(direction);
-                        //on finit le deplacement avec la bonne direction
-                        switch (direction) {
-                            case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
-                            case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                    avanceBas(deplacement);
+                    break;
+                //gauche
+                case 3:
+                    if (celluleCourante.getCenterX() <= x && x - deplacement <= celluleCourante.getCenterX()) {
+                        avanceGauche(celluleCourante.getCenterX()-x);
+                        if (!(chemin.size() == indiceCellCourante+1)) {
+                            setDirection();
+                            System.out.println(direction);
+                            //on finit le deplacement avec la bonne direction
+                            switch (direction) {
+                                case 0: avanceHaut(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 1: avanceDroite(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 2: avanceBas(deplacement - (celluleCourante.getCenterY()-y)); break;
+                                case 3: avanceGauche(deplacement - (celluleCourante.getCenterY()-y)); break;
+                            }
+                        }
+                        else {
+                            //TODO enlever de la vie au joueur
+                            break;
                         }
                     }
-                    else {
-                        //TODO enlever de la vie au joueur
-                        break;
-                    }
-                }
-                avanceGauche(deplacement);
-                break;
-            default:
-                break;
+                    avanceGauche(deplacement);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

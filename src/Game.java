@@ -38,7 +38,7 @@ public class Game{
         StdDraw.rectangle(856, 303, 144, 303);//zone magasin
         
         //chargement de la carte
-        carte = new Carte("4-4.mtp");
+        carte = new Carte("10-10.mtp");
         carte.draw();
 
         //chargement du joueur
