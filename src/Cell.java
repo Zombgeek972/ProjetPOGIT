@@ -89,11 +89,7 @@ abstract class Cell extends Game{
      * @apiNote les parametres sont les coordonnées de la souris, elles sont comparées avec les coordonnées de la case
      * @param x coordonnées x de la souris
      * @param y coordonnées y de la souris
-<<<<<<< HEAD
      * @return si la souris est sur la case lorsque l'on clique
-=======
-     * @return vrai si la souris est sur la case lorsque l'on clique
->>>>>>> 9367f7a2d41b40855332f1323d9d0071eff61125
      */
     public boolean isMouseOn(double x, double y) {
         return centerX-halfLength < x && x < centerX+halfLength && centerY-halfLength < y && y < centerY+halfLength;

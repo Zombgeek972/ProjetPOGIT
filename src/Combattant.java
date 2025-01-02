@@ -127,6 +127,7 @@ abstract class Combattant {
                 return 1.5;
             }
         }
+
     }
 
     /**
@@ -139,5 +140,4 @@ abstract class Combattant {
         }
         return null;
     }
-    
 }

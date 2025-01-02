@@ -1,4 +1,5 @@
 import java.util.List;
+
 /**
  * Il vise l’ennemi qui se trouve à sa portée le plus proche de sa position.
  */

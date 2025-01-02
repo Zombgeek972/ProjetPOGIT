@@ -44,12 +44,12 @@ public class Game {
         StdDraw.setYscale( -10 , 710) ;
         StdDraw.enableDoubleBuffering () ;
 
-
         // chargement de toutes les zones du canvas
         StdDraw.rectangle(350, 350, 350, 350); //zone map
         StdDraw.rectangle(856, 688, 144, 12); //zone level
         StdDraw.rectangle(856, 641, 144, 25); //zone joueur
         StdDraw.rectangle(856, 303, 144, 303);//zone magasin
+        
         // création de la structure des vagues d'ennemis
         progression = new Progression();
         progression.nouvelleVague();
