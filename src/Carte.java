@@ -33,7 +33,7 @@ public class Carte {
 
     public Carte(String nomFichier) {
         //récupération du fichier mis en paramètre
-        Path path = FileSystems.getDefault().getPath("ressources/maps", nomFichier+".mtp");
+        Path path = FileSystems.getDefault().getPath("ressources/maps", nomFichier);
         Queue<String> queue = new LinkedList<String>();
         //enregistrement du fichier dans une queue contenant toutes les lignes
         try (BufferedReader readerer = Files.newBufferedReader(path)) {

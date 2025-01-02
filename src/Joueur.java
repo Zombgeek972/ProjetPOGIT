@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class Joueur {
-    private static int hp = 100;
+    private static int hp = 50;
     private static int money = 100;
     
     public Joueur() {
@@ -45,7 +45,6 @@ public class Joueur {
     public void draw() {
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);
-
         //dimensions de la zone joueur
         int centerX = 856;
         int centerY = 641;
@@ -64,6 +63,7 @@ public class Joueur {
         StdDraw.filledCircle ( centerX - decalagePiece, centerY, 0.7*radius );
 
         //affichage du nb de pieces
+
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.filledRectangle(790, 644, 22, 12);
         StdDraw.setPenColor(new Color (212, 175, 55));

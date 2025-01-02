@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ProjetPO
 Le Boulicaut Gaël
 Oheix Mewen
@@ -20,3 +21,6 @@ les blanc sont de type air,
 les orange de type feu,
 les marrons de type terre,
 les bleux de type eau.
+=======
+# ProjetPOGIT
+>>>>>>> 9367f7a2d41b40855332f1323d9d0071eff61125
