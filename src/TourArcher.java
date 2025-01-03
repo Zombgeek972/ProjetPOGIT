@@ -6,7 +6,7 @@ import java.util.List;
 public class TourArcher extends Tours {
 
     public TourArcher() {
-        super(30, 5, 1, 2, Element.Neutre, 20, StdDraw.YELLOW);
+        super(30, 5, 0.5, 2, Element.Neutre, 20, StdDraw.YELLOW);
     }
     
     public void draw(double x, double y, double rayon) {

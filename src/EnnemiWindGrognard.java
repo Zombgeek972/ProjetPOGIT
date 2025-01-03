@@ -6,7 +6,7 @@ import java.util.List;
 public class EnnemiWindGrognard extends Ennemis {
 
     public EnnemiWindGrognard() {
-        super(1, 7, 2, 5, Element.Air, 2, 1, StdDraw.WHITE);
+        super(1, 2, 3, 5, Element.Air, 2, 1, StdDraw.WHITE);
     }
 
     public String toString() {

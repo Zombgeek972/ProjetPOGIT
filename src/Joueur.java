@@ -3,7 +3,7 @@ import java.awt.Font;
 
 public class Joueur {
     private static int hp = 100;
-    private static int money = 100;
+    private static int money = 50;
     
     public Joueur() {
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public class EnnemiFireGrognard extends Ennemis {
 
     public EnnemiFireGrognard() {
-        super(1, 7, 2, 3, Element.Feu, 2, 1, new Color(255, 140, 0));
+        super(1, 4, 2, 3, Element.Feu, 2, 1, new Color(255, 140, 0));
     }
 
     public String toString() {

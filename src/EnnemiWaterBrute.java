@@ -6,7 +6,7 @@ import java.util.List;
 public class EnnemiWaterBrute extends Ennemis {
 
     public EnnemiWaterBrute() {
-        super(30, 5, 1, 3, Element.Eau, 1, 3, StdDraw.BLUE);
+        super(30, 2, 1, 3, Element.Eau, 1, 3, StdDraw.BLUE);
     }
 
     public String toString() {

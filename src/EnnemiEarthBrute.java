@@ -7,7 +7,7 @@ import java.util.List;
 public class EnnemiEarthBrute extends Ennemis {
 
     public EnnemiEarthBrute() {
-        super(30, 5, 1, 3, Element.Terre, 1, 3, new Color(139, 69, 19));
+        super(30, 2, 2, 3, Element.Terre, 1, 3, new Color(139, 69, 19));
     }
 
     public String toString() {
