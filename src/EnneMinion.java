@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Un Minion ne peut pas attaquer.
  */
@@ -9,5 +11,10 @@ public class EnneMinion extends Ennemis{
 
     public String toString() {
         return "Minion";
+    }
+
+    @Override
+    public void envoieDegats(List<Combattant> lst, int halfLengthCell){
+        return;
     }
 }

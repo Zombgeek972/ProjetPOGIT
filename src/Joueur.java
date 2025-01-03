@@ -107,4 +107,3 @@ public class Joueur {
         StdDraw.text(centerX+decalageCoeur-50, centerY, hp+"");
     }
 }
-

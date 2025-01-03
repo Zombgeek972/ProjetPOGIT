@@ -54,7 +54,7 @@ abstract class Tours extends Combattant {
         StdDraw.filledRectangle(x, y+10, affichagePv, 5);
     }
 
-    // pour afficher la carte dans le magasin
+    // pour afficher la tour dans le magasin
     public void drawSansBarreVie(double x, double y, double rayon) {
         double[] skinX = {
             rayon * 1 + x,

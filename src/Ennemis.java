@@ -98,11 +98,6 @@ public class Ennemis extends Combattant {
         setPosition(new Pair<Integer, Integer> (x,y));
     }
 
-    /*private boolean isOnCell() {
-        return chemin.get(indiceCellCourante).getCenterX() - chemin.get(indiceCellCourante).getHalfLength() <= getPosition().getElt1() && getPosition().getElt1() <= chemin.get(indiceCellCourante).getCenterX() + chemin.get(indiceCellCourante).getHalfLength() &&
-        chemin.get(indiceCellCourante).getCenterY() - chemin.get(indiceCellCourante).getHalfLength() <= getPosition().getElt2() && getPosition().getElt2() <= chemin.get(indiceCellCourante).getCenterY() + chemin.get(indiceCellCourante).getHalfLength();
-    }*/
-
     public Cell getCellCourante() {
         return chemin.get(indiceCellCourante);
     }
@@ -243,20 +238,10 @@ public class Ennemis extends Combattant {
 
     }
 
-    public void recoitDegats(Combattant t) {
-        Tours tourCastee = (Tours) t;
-        enlevePV((int) (tourCastee.getAtk() * vulnerabitite(tourCastee)));
-        StdDraw.setPenColor(StdDraw.BLACK);
-        StdDraw.line(tourCastee.getPosition().getElt1(), tourCastee.getPosition().getElt2(), this.getPosition().getElt1(), this.getPosition().getElt2());
-    }
-
+    // j'ai eu besoin de l'implementer alors que je n'ai pas eu besoin pour Tours.java
     @Override
     void envoieDegats(List<Combattant> lst, int halfLengthCell) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'envoieDegats'");
     }
-
-    /*public String toString() {
-        return "PV : "+getPv()+", atk : "+getAtk()+", atkSpeed : "+getAtkSpeed()+", portée : "+getRange()+", element : "+getElement()+ ", speed : "+speedCell+", speedPix : "+speedPix+", récompense : "+reward;
-    }*/
 }
