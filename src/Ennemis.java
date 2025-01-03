@@ -238,10 +238,9 @@ public class Ennemis extends Combattant {
 
     }
 
-    // j'ai eu besoin de l'implementer alors que je n'ai pas eu besoin pour Tours.java
+    // j'ai eu besoin de l'implementer alors que je n'ai pas eu besoin pour Tours.java, c'est une methode pour les classes filles de Ennemis et Tours.
     @Override
     void envoieDegats(List<Combattant> lst, int halfLengthCell) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'envoieDegats'");
+        return;
     }
 }
