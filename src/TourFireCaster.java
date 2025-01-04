@@ -6,10 +6,19 @@ import java.util.List;
  */
 public class TourFireCaster extends Tours {
 
+    /**
+     * constructeur permettant de créer une tour Fire Caster.
+     */
     public TourFireCaster() {
         super(30, 10, 0.5, 2.5, Element.Feu, 100, new Color(255, 140, 0));
     }
 
+    /**
+     *  permet d'afficher la tour à l'ecran.
+     * @param x sa coordonnée x sur le canvas.
+     * @param y sa coordonnée y sur le canvas.
+     * @param rayon sa taille.
+     */
     public void draw(double x, double y, double rayon) {
         super.draw(x, y, getCouleur(), rayon);
     }

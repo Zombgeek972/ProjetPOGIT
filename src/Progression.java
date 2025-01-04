@@ -23,6 +23,9 @@ public class Progression {
     private Queue<String> cartes;
     private String carteActuelle;
 
+    /**
+     * constructeur permettant de charger la structure du jeu de d'initialiser la première vague.
+     */
     public Progression() {
         levels = new LinkedList<>();
         vagues = new LinkedList<>();
@@ -32,6 +35,10 @@ public class Progression {
         init();
     }
 
+    /**
+     * permet de récuperer la vague actuelle que le joueur essaye de combattre.
+     * @return une liste de pair contenant le moment où l'énnemi doit spawn et l'énnemi qui doit spawn à ce moment la.
+     */
     public List<Pair<Double, Ennemis>> getVague() {
         return ennemis;
     }
@@ -67,6 +74,11 @@ public class Progression {
     private void setCarte() {
         carteActuelle = cartes.remove();
     }
+
+    /**
+     * permet de récuperer la carte sur laquelle les énnemus progressent.
+     * @return la carte actuelle.
+     */
     public String getCarte() {
         return carteActuelle;
     }
@@ -82,6 +94,10 @@ public class Progression {
         ennemis = vagues.remove();
     }
 
+    /**
+     * permet de savoir si la vague courante est fini.
+     * @return {@code true} si la vague est fini, {@code false} sinon.
+     */
     public boolean vagueFini() {
         for (Pair<Double,Ennemis> pair : ennemis) {
             if (pair.getElt2().getProgresse() || !pair.getElt2().getASpawn()) {
@@ -90,9 +106,19 @@ public class Progression {
         }
         return true;
     }
+
+    /**
+     * permet de savoir si le level est fini.
+     * @return {@code true} si le level est fini, {@code false} sinon.
+     */
     public boolean lvlFini() {
         return vagues.size() == 0 && vagueFini();
     }
+
+    /**
+     * permet de savoir si le jeu est fini.
+     * @return {@code true} si le jeu est fini, {@code false} sinon.
+     */
     public boolean jeuFini() {
         return levels.size() == 0 && lvlFini();
     }
@@ -187,6 +213,9 @@ public class Progression {
         }
     }
 
+    /**
+     * affichage du niveau et de la vague actuelle.
+     */
     public void draw() {
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);

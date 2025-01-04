@@ -5,12 +5,21 @@ import java.util.List;
  */
 public class TourArcher extends Tours {
 
+    /**
+     * constructeur permettant de créer une tour Archer.
+     */
     public TourArcher() {
         super(30, 5, 0.5, 2, Element.Neutre, 20, StdDraw.YELLOW);
     }
     
+    /**
+     * permet d'afficher la tour à l'écran.
+     * @param x sa coordonnée x
+     * @param y sa coordonnée y
+     * @param rayon la taille de la tour.
+     */
     public void draw(double x, double y, double rayon) {
-        super.draw(x, y, getCouleur(), rayon);
+        super.draw(x, y, this.getCouleur(), rayon);
     }
 
     /**

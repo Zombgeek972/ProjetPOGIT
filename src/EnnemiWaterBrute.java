@@ -5,6 +5,9 @@ import java.util.List;
  */
 public class EnnemiWaterBrute extends Ennemis {
 
+    /**
+     * le constructeur d'un water brute.
+     */
     public EnnemiWaterBrute() {
         super(30, 2, 1, 3, Element.Eau, 1, 3, StdDraw.BLUE);
     }

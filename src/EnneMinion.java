@@ -5,6 +5,9 @@ import java.util.List;
  */
 public class EnneMinion extends Ennemis{
 
+    /**
+     * constructeur d'un Minion.
+     */
     public EnneMinion() {
         super(10, 3, 0, 0, Element.Neutre, 1, 1, StdDraw.YELLOW);
     }

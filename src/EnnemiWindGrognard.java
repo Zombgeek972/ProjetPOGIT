@@ -5,6 +5,9 @@ import java.util.List;
  */
 public class EnnemiWindGrognard extends Ennemis {
 
+    /**
+     * le constructeur d'un wind grognard.
+     */
     public EnnemiWindGrognard() {
         super(1, 2, 3, 5, Element.Air, 2, 1, StdDraw.WHITE);
     }

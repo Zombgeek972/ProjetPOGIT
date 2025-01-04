@@ -5,10 +5,19 @@ import java.util.List;
  */
 public class TourWaterCaster extends Tours {
 
+    /**
+     * constructeur permettant de créer une tour Water Caster.
+     */
     public TourWaterCaster() {
         super(30, 3, 1, 4, Element.Eau, 50, StdDraw.BLUE);
     }
 
+    /**
+     * permet d'afficher la tour à l'ecran.
+     * @param x sa coordonnée x sur le canvas.
+     * @param y sa coordonnée y sur le canvas.
+     * @param rayon sa taille.
+     */
     public void draw(double x, double y, double rayon) {
         super.draw(x, y, getCouleur(), rayon);
     }

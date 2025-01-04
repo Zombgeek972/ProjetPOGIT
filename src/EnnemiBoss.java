@@ -5,6 +5,9 @@ import java.util.List;
  */
 public class EnnemiBoss extends Ennemis {
 
+    /**
+     * constructeur d'un ennemi Boss.
+     */
     public EnnemiBoss() {
         super(150, 100, 10, 2, Element.Feu, 0.5, 100, StdDraw.BLACK);
     }

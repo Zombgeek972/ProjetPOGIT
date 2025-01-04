@@ -11,6 +11,9 @@ public class Magasin {
     List<Pair<Integer, Integer>> centreCases;
     Pair<Integer, Integer> halfDistXY;
 
+    /**
+     * le constructeur permet d'initialiser le magasin avec toutes les tours disponibles.
+     */
     public Magasin() {
         lstTours = new LinkedList<>();
 
@@ -33,6 +36,12 @@ public class Magasin {
         centreCases.add(new Pair<Integer,Integer>(856 - halfDistXY.getElt1(), 606 - halfDistXY.getElt2() * 5));
     }
 
+    /**
+     * permet de récuperer la tour sur laquelle on a cliqué.
+     * @param x la coordonnée x de la souris.
+     * @param y la coordonnée x de la souris.
+     * @return la tour que laquelle le joueur a cliqué, null si il a cliqué sur aucune tour.
+     */
     public Tours getTourClicked(double x, double y) {
         for (int i = 0; i<centreCases.size(); i++) {
             Pair<Integer, Integer> p = centreCases.get(i);
@@ -45,6 +54,12 @@ public class Magasin {
         return null;
     }
 
+    /**
+     * permet de sacoir si le joueur a cliqué sur le magasin.
+     * @param cooX la coordonnée x de la souris.
+     * @param cooY la coordonnée y de la souris.
+     * @return true si le joueur a cliqué sur le magasin, false sinon.
+     */
     public boolean clicked(double cooX, double cooY) {
         if (712 < cooX && cooX < 1000) {
             if (0 < cooY && cooY < 606) {
@@ -55,6 +70,9 @@ public class Magasin {
         return false;
     }
 
+    /**
+     * affiche le magasin.
+     */
     public void draw() {
         StdDraw.setPenColor(StdDraw.BLACK);
         Font f = new Font("Arial", 0, 12);

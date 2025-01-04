@@ -31,6 +31,10 @@ public class Carte {
     private Cell base;
     private int halfLength;
 
+    /**
+     * constructeur de la classe Carte, permet d'initialiser et de dessiner la carte, le chemin et les coordonnées des cellules.
+     * @param nomFichier nom du fichier de carte que la classe doit instancier
+     */
     public Carte(String nomFichier) {
         //récupération du fichier mis en paramètre
         Path path = FileSystems.getDefault().getPath("ressources/maps", nomFichier+".mtp");
@@ -164,19 +168,41 @@ public class Carte {
         }
     }
 
+    /**
+     * permet de récuperer la carte sur laquelle les énnemis se déplacent.
+     * @return un tableau de tableau de cellules correspondant à la carte.
+     */
     public Cell[][] getCarte() {
         return quadrillage;
     }
+    /**
+     * permet de récuperer le chemin que doivent parcourir les énnemis.
+     * @return une liste de cellles, celle du chemin.
+     */
     public List<Cell> getChemin() {
         return chemin;
     }
+    /**
+     * permet de récuperer la cellule de spawn des ennemis.
+     * @return la cellule de spawn des énnemis.
+     */
     public Cell getSpawn() {
         return spawn;
     }
+    /**
+     * permet de récuperer la base du joueur, la ou les énnemis déspawn.
+     * @return la cellule de la base du joueur.
+     */
     public Cell getBase() {
         return base;
     }
 
+    /**
+     * permet de savoir si on a cliqué sur la carte ou non
+     * @param x coordonnées x de la souris
+     * @param y coordonnées y de la souris
+     * @return true si on a cliqué sur la carte, false sinon.
+     */
     public boolean clicked(double x, double y) {
         if (0 < x && x < 700) {
             if (0 < y && y < 700) {
@@ -187,7 +213,7 @@ public class Carte {
         return false;
     }
     /**
-     * 
+     * permet de récuperer la cellule présente aux coordonnées x,y, null si il n'y en a pas aux coordonnées.
      * @param x coordonnées x de la souris
      * @param y coordonnées y de la souris
      * @return la cellule présente aux coordonnées x,y

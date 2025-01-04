@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.util.List;
 
-public class Ennemis extends Combattant {
+/**
+ * classe abstraite contenant toutes les informations nécessaires pour que tout marche bien.
+ */
+abstract class Ennemis extends Combattant {
     private double speedCell;
     private int speedPix;
     private int indiceCellCourante;
@@ -13,6 +16,17 @@ public class Ennemis extends Combattant {
     private boolean progresse;
     private boolean arrive;
     
+    /**
+     * constructeur d'un ennemi
+     * @param pv son nombre de points de vie.
+     * @param atk sa quantité d'attaque.
+     * @param atkSpeed sa vitesse d'attaque.
+     * @param range la portée de son attaque.
+     * @param element le type de l'ennemi entre Neutre, Terre, Eau, Feu et Air.
+     * @param speedCell sa vitesse de déplacement en nombre de cellules par seconde.
+     * @param reward la quantité de pièces à donner au joueur lorsqu'il arrive à tuer l'ennemi.
+     * @param couleur la couleur de n'ennemi en fonction de son element.
+     */
     public Ennemis(int pv, int atk, double atkSpeed, double range, Element element,
             double speedCell, int reward, Color couleur) {
         super(pv, atk, atkSpeed, range, element, couleur);
@@ -52,40 +66,88 @@ public class Ennemis extends Combattant {
         }
     }
 
+    /**
+     * permet de savoir à quelle vitesse se déplace le joueur.
+     * @return sa vitesse en cellule/seconde.
+     */
     public double getSpeedCell() {
         return speedCell;
     }
+
+    /**
+     * permet de savoir à quelle vitese se déplace le joueur.
+     * @return sa vitesse en pixels/seconde.
+     */
     public int getSpeedPix() {
         return speedPix;
     }
+
+    /**
+     * permet de savoir combien de pièces il faut ajouter au joueur si il arrive à touer l'ennemi.
+     * @return ne nombre de pièces.
+     */
     public int getReward() {
         return reward;
     }
+
+    /**
+     * permet de savoir si l'ennemi a spawn sur la carte ou non.
+     * @return true si il a spawn, false sinon.
+     */
     public boolean getASpawn() {
         return aSpawn;
     }
 
+    /**
+     * permet d'enregistrer le fait que l'ennemi a spawn sur la carte.
+     */
     public void setASpawn() {
         aSpawn = true;
     }
 
+    /**
+     * permet d'enregistrer ce que doit faire l'énnemi.
+     * @param b le booleen à enregistrer. true veut dire que l'énnemi progresse, false veut dire que l'énnemi ne progresse pas.
+     */
     public void setProgresse(boolean b) {
         progresse = b;
     }
+
+    /**
+     * permet de savoir si l'ennemi progresse encore ou pas. Si il progresse, c'est qu'il a spawn et qu'il est toujours en vie.
+     * @return true si il progresse, false sinon.
+     */
     public boolean getProgresse() {
         return progresse;
     }
 
+    /**
+     * permet d'enregistrer le fait que l'énnemi est arrivé à la base du joueur.
+     */
     public void setArrive() {
         arrive = true;
     }
+
+    /**
+     * permet de savoir si l'énnemi est arrivé.
+     * @return true si il est arrivé, false sinon.
+     */
     public boolean getArrive() {
         return arrive;
     }
 
+    /**
+     * permet de savoir sur quelle carte les énnemis progressent.
+     * @param quadrillage la carte instanciée avec toutes les cellules.
+     */
     public void setCarte(Cell[][] quadrillage) {
         this.quadrillage = quadrillage;
     }
+
+    /**
+     * permet de savoir sur quel chemin les énnemis doivent progresser.
+     * @param chemin le chemin que les énnemis doivent suivre.
+     */
     public void setChemin(List<Cell> chemin) {
         this.chemin = chemin;
         setSpeedPix();
@@ -94,10 +156,19 @@ public class Ennemis extends Combattant {
         this.speedPix = (int) speedCell*chemin.get(0).getHalfLength()*2;
     }
 
+    /**
+     * permet d'enregistrer les coordonnées de spawn des énnemis.
+     * @param x la coordonnée x de spawn.
+     * @param y la coordonnée y de spawn.
+     */
     public void setSpawn(int x, int y) {
         setPosition(new Pair<Integer, Integer> (x,y));
     }
 
+    /**
+     * permet de savoir sur quelle cellule du chemin se situe l'ennemi.
+     * @return la cellule où se situe l'ennemi.
+     */
     public Cell getCellCourante() {
         return chemin.get(indiceCellCourante);
     }
@@ -138,7 +209,6 @@ public class Ennemis extends Combattant {
     /**
      * une fonction qui fait avancer l'ennemi en fonction de deltaTimeSec
      * @param deltaTimeSec le temps en seconde, determine la distance que va parcourir l'ennemi.
-     * @return vrai si l'ennemi est toujours en vie.
      */
     public void avance(double deltaTimeSec) {
 
@@ -222,6 +292,9 @@ public class Ennemis extends Combattant {
         }
     }
 
+    /**
+     * permet d'afficher l'ennemi à l'ecran avec sa bonne position, couleur et nombre de PV.
+     */
     public void draw() {
         //skin de l'ennemi
         double rayon = quadrillage[chemin.get(0).getI()][chemin.get(0).getJ()].getHalfLength()*0.3;

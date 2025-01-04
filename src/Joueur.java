@@ -1,38 +1,71 @@
 import java.awt.Color;
 import java.awt.Font;
 
+/**
+ * cette classe permet de gerer les calculs et l'affichage du nombre de pièces et de coeurs.
+ */
 public class Joueur {
     private static int hp = 100;
     private static int money = 50;
     
+    /**
+     * constructeur de Joueur.
+     */
     public Joueur() {
     }
 
+    /**
+     * permet de récuperer le nombre de points de vie restants du joueur.
+     * @return son nombre de points de vie.
+     */
     public int getHp() {
         return hp;
     }
+
+    /**
+     * permet de récuperer le nombre de monnaie que le joueur a.
+     * @return la quantité de monnaie que le joueur a.
+     */
     public int getMoney() {
         return money;
     }
-    
-    public void subitDegats(Ennemis e) {
-        hp -= e.getAtk();
-    }
 
+    /**
+     * permet de savoir si le joueur est en vie ou non
+     * @return true si le joueur est en vie, false sinon.
+     */
     public boolean enVie() {
         return (hp > 0);
     }
 
+    /**
+     * permet d'ajouter de la monnaie au joueur pour pouvoir acheter des tours.
+     * @param montant le nombre de pièces à ajouter.
+     */
     public void ajouteMonnaie(int montant) {
         money += montant;
     }
+
+    /**
+     * permet d'enlever de la monnaie au joueur lorsqu'il achete une tour.
+     * @param montant la quantité de monnaie à enlever.
+     */
     public void enleveMonnaie(int montant) {
         money -= montant;
     }
 
-    public void ajouteVie(int quantité) {
-        hp += quantité;
+    /**
+     * permet d'ajouter de la vie au joueur si besoin.
+     * @param quantite la quantité de vie à ajouter.
+     */
+    public void ajouteVie(int quantite) {
+        hp += quantite;
     }
+
+    /**
+     * permet d'enlever de la vie au joueur lorsqu'un énnemi atteint la base du joueur.
+     * @param quantite la quantité de vie à enlever au joueur. Si on est en dessous de 0 après avoir enlevé la vie, on met la quantité de vie à 0.
+     */
     public void enleveVie(int quantite) {
         if (hp - quantite >= 0) {
             hp -= quantite;
@@ -42,6 +75,9 @@ public class Joueur {
         }
     }
 
+    /**
+     * permet d'afficher le nombre de coeur et de pièces qu'a le joueur à l'appel de cette fonction.
+     */
     public void draw() {
         Font font = new Font("Arial", Font.BOLD, 25);
         StdDraw.setFont(font);

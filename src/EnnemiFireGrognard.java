@@ -6,6 +6,9 @@ import java.util.List;
  */
 public class EnnemiFireGrognard extends Ennemis {
 
+    /**
+     * constructueur d'un Fire Grognard.
+     */
     public EnnemiFireGrognard() {
         super(1, 4, 2, 3, Element.Feu, 2, 1, new Color(255, 140, 0));
     }

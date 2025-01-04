@@ -5,10 +5,19 @@ import java.util.List;
  */
 public class TourWindCaster extends Tours {
 
+    /**
+     * constructeur permettant de créer une tout Wind Caster.
+     */
     public TourWindCaster() {
         super(30, 5, 1.5, 6, Element.Air, 50, StdDraw.WHITE);
     }
 
+    /**
+     * permet d'afficher la tour à l'ecran
+     * @param x sa coordonnée x sur le canvas.
+     * @param y sa coordonnée y sur le canvas.
+     * @param rayon sa taille.
+     */
     public void draw(double x, double y, double rayon) {
         super.draw(x, y, getCouleur(), rayon);
     }

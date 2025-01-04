@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * cette classe permet de faire tous les calculs à chaque image pour savoir quoi faire, afficher...
+ */
 public class Game {
     private Carte carte;
     private Joueur joueur;
@@ -12,10 +15,16 @@ public class Game {
     private boolean gagne;
     private Tours tourSelect;
 
+    /**
+     * constructeur de la classe Game, on initialise juste la liste qui va accueillir les tours que le joueur va placer sur la carte.
+     */
     public Game(){
         lstTours = new ArrayList<>();
     }
 
+    /**
+     * methode permettant d'initialiser, de gerer les calculs et de dire si on a gagné ou perdu le jeu. Un simple message dans la console permet de le savoir.
+     */
     public void launch(){
         init();
         long previousTime = System.currentTimeMillis();
@@ -121,6 +130,7 @@ public class Game {
             }
         }
 
+        // les énnemis avancent et attaquent.
         for (Pair<Double, Ennemis> p : vagueCourante) {
             Ennemis ennemi = p.getElt2();
 
@@ -169,6 +179,9 @@ public class Game {
         MAJvague();
     }
 
+    /**
+     * permet de savoir si le jeu est fini, si on a fini une vague et/ou un niveau. Change en conséquence ce qu'il faut.
+     */
     private void MAJvague() {
         if (progression.jeuFini()) {
             gagne = true;

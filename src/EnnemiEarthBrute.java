@@ -6,6 +6,9 @@ import java.util.List;
  */
 public class EnnemiEarthBrute extends Ennemis {
 
+    /**
+     * constructeur d'un ennemi Earth Brute.
+     */
     public EnnemiEarthBrute() {
         super(30, 2, 2, 3, Element.Terre, 1, 3, new Color(139, 69, 19));
     }
