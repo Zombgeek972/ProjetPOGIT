@@ -1,5 +1,5 @@
 import java.awt.Color;
-abstract class Cell extends Game{
+abstract class Cell {
     private char c;
     private boolean constructible;
     private int centerX;
